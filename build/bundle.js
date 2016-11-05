@@ -131,7 +131,7 @@
 	    key: 'calculatePosition',
 	    value: function calculatePosition(index, boxCount) {
 	      var distance = 10;
-	      var visionAngle = 100;
+	      var visionAngle = 90;
 	      var x = distance * Math.cos(2 * (index + 0.5) * Math.PI / boxCount / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360);
 	      var y = 1.6;
 	      var z = -distance * Math.sin(2 * (index + 0.5) * Math.PI / boxCount / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360);
@@ -76361,8 +76361,9 @@
 	  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
 
 	  function wrap(innerFn, outerFn, self, tryLocsList) {
-	    // If outerFn provided, then outerFn.prototype instanceof Generator.
-	    var generator = Object.create((outerFn || Generator).prototype);
+	    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+	    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+	    var generator = Object.create(protoGenerator.prototype);
 	    var context = new Context(tryLocsList || []);
 
 	    // The ._invoke method unifies the implementations of the .next,
@@ -98769,15 +98770,15 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _aframeReact = __webpack_require__(306);
-
 	var _react = __webpack_require__(307);
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _aframeReact = __webpack_require__(306);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = function (props) {
+	var Camera = function Camera(props) {
 	  return _react2.default.createElement(
 	    _aframeReact.Entity,
 	    null,
@@ -98813,6 +98814,8 @@
 	    )
 	  );
 	};
+
+	exports.default = Camera;
 
 /***/ },
 /* 480 */
@@ -98930,7 +98933,7 @@
 	        position: '0 0 -0.2',
 	        geometry: 'primitive: box; depth: 0.1; height: 0.6; width: 1',
 	        material: { color: props.color }
-	        //onClick={() => props.onSelect(props.id)}
+	        // onClick={() => props.onSelect(props.id)}
 	      }),
 	      props.selected && _react2.default.createElement('a-animation', {
 	        attribute: 'position',

@@ -15,10 +15,11 @@
   },
   "scripts": {
     "build": "webpack",
+    "postbuild": "git add build/*",
     "serve": "webpack-dev-server --content-base src --progress --watch --history-api-fallback --inline --hot --host 0.0.0.0 --port 9090",
     "standard": "standard"
   },
-  "pre-commit": [ "standard" ],
+  "pre-commit": [ "standard", "build" ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/r-wittmann/IFD-proto.git"
