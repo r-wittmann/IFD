@@ -1,2 +1,1 @@
-# IFD-proto
-Prototype for the Interface Design Tutorial
+## Interface-Design Prototype
