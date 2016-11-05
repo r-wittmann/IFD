@@ -121,6 +121,8 @@
 	        color: 'red'
 	      }, {
 	        color: 'red'
+	      }, {
+	        color: 'red'
 	      }]
 	    };
 	    _this.selectBox = _this.selectBox.bind(_this);
@@ -98790,8 +98792,8 @@
 	        {
 	          cursor: 'fuse: true; fuseTimeout: 2000',
 	          objects: '.clickable',
-	          position: '0 0 -2',
-	          geometry: 'primitive: ring; radiusInner: 0.03; radiusOuter: 0.04',
+	          position: '0 0 -1',
+	          geometry: 'primitive: ring; radiusInner: 0.015; radiusOuter: 0.02',
 	          material: 'color: green; shader: flat'
 	        },
 	        _react2.default.createElement('a-animation', {
