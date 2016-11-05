@@ -38,9 +38,13 @@ class VRScene extends React.Component {
   calculatePosition (index, boxCount) {
     const distance = 10
     const visionAngle = 90
-    const x = distance * Math.cos((2 * (index + 0.5) * Math.PI / boxCount) / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360)
-    const y = 1.6
-    const z = -distance * Math.sin((2 * (index + 0.5) * Math.PI / boxCount) / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360)
+    const maxPerRow = 6
+    let x, y, z
+    if (index < maxPerRow) {
+      x = distance * Math.cos((2 * (index + 0.5) * Math.PI / maxPerRow) / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360)
+      y = 1.6
+      z = -distance * Math.sin((2 * (index + 0.5) * Math.PI / maxPerRow) / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360)
+    }
     return {x: x, y: y, z: z}
   }
 
