@@ -132,9 +132,15 @@
 	    value: function calculatePosition(index, boxCount) {
 	      var distance = 10;
 	      var visionAngle = 90;
-	      var x = distance * Math.cos(2 * (index + 0.5) * Math.PI / boxCount / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360);
-	      var y = 1.6;
-	      var z = -distance * Math.sin(2 * (index + 0.5) * Math.PI / boxCount / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360);
+	      var maxPerRow = 6;
+	      var x = void 0,
+	          y = void 0,
+	          z = void 0;
+	      if (index < maxPerRow) {
+	        x = distance * Math.cos(2 * (index + 0.5) * Math.PI / maxPerRow / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360);
+	        y = 1.6;
+	        z = -distance * Math.sin(2 * (index + 0.5) * Math.PI / maxPerRow / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360);
+	      }
 	      return { x: x, y: y, z: z };
 	    }
 	  }, {
@@ -98790,8 +98796,8 @@
 	        {
 	          cursor: 'fuse: true; fuseTimeout: 2000',
 	          objects: '.clickable',
-	          position: '0 0 -2',
-	          geometry: 'primitive: ring; radiusInner: 0.03; radiusOuter: 0.04',
+	          position: '0 0 -1',
+	          geometry: 'primitive: ring; radiusInner: 0.015; radiusOuter: 0.02',
 	          material: 'color: green; shader: flat'
 	        },
 	        _react2.default.createElement('a-animation', {
