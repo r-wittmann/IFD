@@ -1,7 +1,7 @@
 import {Entity} from 'aframe-react'
 import React from 'react'
 
-export default props => (
+export default (props) => (
   <Entity
     geometry={{primitive: 'sphere', radius: 30}}
     material={{shader: 'flat', src: props.src}}
