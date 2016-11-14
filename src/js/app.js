@@ -1,58 +1,28 @@
-import 'aframe'
-import 'aframe-animation-component'
-import 'aframe-text-component'
-import 'babel-polyfill'
-import {Entity, Scene} from 'aframe-react'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import 'aframe'
+import 'aframe-animation-component'
+import 'aframe-text-component'
+import 'aframe-look-at-component'
+import 'babel-polyfill'
+
+import {Scene} from 'aframe-react'
+
 import Camera from './components/Camera'
 import Sky from './components/Sky'
+import Light from './components/Light'
 import Floor from './components/Floor'
-import SelectableBox from './components/SelectableBox'
+import CategorySelector from './components/CategorySelector'
+
+import categoryList from './category-list'
 
 class VRScene extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      color: 'red',
-      cameraPosition: '0 0 0',
-      selectedBox: -1,
-      selectableBoxList: [{
-        color: 'red'
-      }, {
-        color: 'red'
-      }, {
-        color: 'red'
-      }, {
-        color: 'red'
-      }, {
-        color: 'red'
-      }, {
-        color: 'red'
-      }]
+      cameraPosition: '0 0 0'
     }
-    this.selectBox = this.selectBox.bind(this)
-  }
-
-  calculatePosition (index, boxCount) {
-    const distance = 10
-    const visionAngle = 90
-    const maxPerRow = 6
-    let x, y, z
-    if (index < maxPerRow) {
-      x = distance * Math.cos((2 * (index + 0.5) * Math.PI / maxPerRow) / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360)
-      y = 1.6
-      z = -distance * Math.sin((2 * (index + 0.5) * Math.PI / maxPerRow) / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360)
-    }
-    return {x: x, y: y, z: z}
-  }
-
-  selectBox (id) {
-    this.setState({
-      deselectedBox: this.state.selectedBox,
-      selectedBox: id
-    })
   }
 
   render () {
@@ -64,20 +34,9 @@ class VRScene extends React.Component {
 
         <Floor />
 
-        <Entity light={{type: 'ambient', color: '#888'}} />
-        <Entity light={{type: 'directional', intensity: 0.5}} position='-1 1 0' />
-        <Entity light={{type: 'directional', intensity: 0.5}} position='1 1 -1' />
+        <Light />
 
-        {this.state.selectableBoxList.map((box, index) =>
-          <SelectableBox
-            key={index}
-            id={index}
-            position={this.calculatePosition(index, this.state.selectableBoxList.length)}
-            color={box.color}
-            onSelect={this.selectBox}
-            selected={index === this.state.selectedBox}
-          />
-        )}
+        <CategorySelector categoryList={categoryList} />
 
       </Scene>
     )

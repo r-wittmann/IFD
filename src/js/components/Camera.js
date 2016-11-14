@@ -5,7 +5,7 @@ const Camera = (props) => (
   <Entity>
     <Entity id='main-camera' camera='userHeight: 1.6' look-controls wasd-controls='' {...props}>
       <Entity
-        cursor='fuse: true; fuseTimeout: 2000'
+        cursor='' // selection should work by clicking on desctop and by fusing on the mobile device
         objects='.clickable'
         position='0 0 -1'
         geometry='primitive: ring; radiusInner: 0.015; radiusOuter: 0.02'
@@ -26,7 +26,9 @@ const Camera = (props) => (
           fill='backwards'
           from='1 1 1'
           to='0.1 0.1 0.1'
-          dur='2000' />
+          dur='2000'
+          delay='500'
+        />
       </Entity>
     </Entity>
   </Entity>

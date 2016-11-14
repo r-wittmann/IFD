@@ -3,9 +3,8 @@ import { Entity } from 'aframe-react'
 
 const Floor = () => (
   <Entity
-    geometry='primitive: plane; height: 20; width: 20'
+    geometry='primitive: cylinder; height: 0.01; radius: 11'
     material={{color: '#262826'}}
-    rotation='-90 0 0'
   />
 )
 
