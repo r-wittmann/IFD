@@ -30,7 +30,7 @@ class VRScene extends React.Component {
       <Scene>
         <Camera position={this.state.cameraPosition} />
 
-        <Sky src='url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' />
+        <Sky />
 
         <Floor />
 

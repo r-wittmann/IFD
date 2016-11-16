@@ -128,7 +128,7 @@
 	        _aframeReact.Scene,
 	        null,
 	        _react2.default.createElement(_Camera2.default, { position: this.state.cameraPosition }),
-	        _react2.default.createElement(_Sky2.default, { src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }),
+	        _react2.default.createElement(_Sky2.default, null),
 	        _react2.default.createElement(_Floor2.default, null),
 	        _react2.default.createElement(_Light2.default, null),
 	        _react2.default.createElement(_CategorySelector2.default, { categoryList: _categoryList2.default })
@@ -98806,10 +98806,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = function (props) {
+	exports.default = function () {
 	  return _react2.default.createElement(_aframeReact.Entity, {
 	    geometry: { primitive: 'sphere', radius: 30 },
-	    material: { shader: 'flat', src: props.src },
+	    material: { shader: 'flat', src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' },
 	    scale: '1 1 -1' });
 	};
 
