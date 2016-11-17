@@ -2,18 +2,19 @@ import React, { PropTypes } from 'react'
 import { Entity } from 'aframe-react'
 
 import SelectableBox from './SelectableBox'
-import BreadCrumbs from './BreadCrumbs'
+import BackButton from './BackButton'
 
 class CategorySelector extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       selectedCategoryList: props.categoryList,
-      breadCrumbs: ['Rooms'],
+      goBackToArray: [],
       fadeOut: false
     }
 
     this.selectCategory = this.selectCategory.bind(this)
+    this.goBack = this.goBack.bind(this)
   }
 
   calculatePosition (index, boxCount) {
@@ -29,11 +30,11 @@ class CategorySelector extends React.Component {
   }
 
   selectCategory (selectedCategory) {
-    const newBreadCrumbs = this.state.breadCrumbs
-    newBreadCrumbs.push(selectedCategory.categoryName)
+    const newGoBackToArray = this.state.goBackToArray
+    newGoBackToArray.push(this.state.selectedCategoryList)
 
     this.setState({
-      breadCrumbs: newBreadCrumbs
+      goBackToArray: newGoBackToArray
     })
 
     if (selectedCategory.subcategories) {
@@ -47,6 +48,16 @@ class CategorySelector extends React.Component {
       }]
       this.fadeOutCategories(this, dummyCategoryList)
     }
+  }
+
+  goBack () {
+    const newGoBackToArray = this.state.goBackToArray
+
+    this.fadeOutCategories(this, newGoBackToArray.pop())
+
+    this.setState({
+      goBackToArray: newGoBackToArray
+    })
   }
 
   fadeOutCategories (self, categoryList) {
@@ -78,7 +89,11 @@ class CategorySelector extends React.Component {
             fadeOut={this.state.fadeOut}
           />
         )}
-        <BreadCrumbs breadCrumbs={this.state.breadCrumbs} />
+        {this.state.goBackToArray.length !== 0 &&
+          <BackButton
+            goBack={this.goBack}
+          />
+        }
       </Entity>
     )
   }

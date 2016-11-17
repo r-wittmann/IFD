@@ -7,7 +7,7 @@ import 'aframe-text-component'
 import 'aframe-look-at-component'
 import 'babel-polyfill'
 
-import {Scene} from 'aframe-react'
+import { Scene } from 'aframe-react'
 
 import Camera from './components/Camera'
 import Sky from './components/Sky'
@@ -29,15 +29,10 @@ class VRScene extends React.Component {
     return (
       <Scene>
         <Camera position={this.state.cameraPosition} />
-
-        <Sky src='url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' />
-
+        <Sky />
         <Floor />
-
         <Light />
-
         <CategorySelector categoryList={categoryList} />
-
       </Scene>
     )
   }

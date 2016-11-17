@@ -128,7 +128,7 @@
 	        _aframeReact.Scene,
 	        null,
 	        _react2.default.createElement(_Camera2.default, { position: this.state.cameraPosition }),
-	        _react2.default.createElement(_Sky2.default, { src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }),
+	        _react2.default.createElement(_Sky2.default, null),
 	        _react2.default.createElement(_Floor2.default, null),
 	        _react2.default.createElement(_Light2.default, null),
 	        _react2.default.createElement(_CategorySelector2.default, { categoryList: _categoryList2.default })
@@ -98778,8 +98778,8 @@
 	          fill: 'backwards',
 	          from: '1 1 1',
 	          to: '0.1 0.1 0.1',
-	          dur: '2000',
-	          delay: '500'
+	          dur: '1200',
+	          delay: '300'
 	        })
 	      )
 	    )
@@ -98798,19 +98798,20 @@
 	  value: true
 	});
 
-	var _aframeReact = __webpack_require__(477);
-
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _aframeReact = __webpack_require__(477);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = function (props) {
+	exports.default = function () {
 	  return _react2.default.createElement(_aframeReact.Entity, {
 	    geometry: { primitive: 'sphere', radius: 30 },
-	    material: { shader: 'flat', src: props.src },
-	    scale: '1 1 -1' });
+	    material: { shader: 'flat', src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' },
+	    scale: '1 1 -1'
+	  });
 	};
 
 /***/ },
@@ -98831,7 +98832,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Light = function Light(props) {
+	var Light = function Light() {
 	  return _react2.default.createElement(
 	    _aframeReact.Entity,
 	    null,
@@ -98892,9 +98893,9 @@
 
 	var _SelectableBox2 = _interopRequireDefault(_SelectableBox);
 
-	var _BreadCrumbs = __webpack_require__(486);
+	var _BackButton = __webpack_require__(486);
 
-	var _BreadCrumbs2 = _interopRequireDefault(_BreadCrumbs);
+	var _BackButton2 = _interopRequireDefault(_BackButton);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -98914,11 +98915,12 @@
 
 	    _this.state = {
 	      selectedCategoryList: props.categoryList,
-	      breadCrumbs: ['Rooms'],
+	      goBackToArray: [],
 	      fadeOut: false
 	    };
 
 	    _this.selectCategory = _this.selectCategory.bind(_this);
+	    _this.goBack = _this.goBack.bind(_this);
 	    return _this;
 	  }
 
@@ -98938,11 +98940,11 @@
 	  }, {
 	    key: 'selectCategory',
 	    value: function selectCategory(selectedCategory) {
-	      var newBreadCrumbs = this.state.breadCrumbs;
-	      newBreadCrumbs.push(selectedCategory.categoryName);
+	      var newGoBackToArray = this.state.goBackToArray;
+	      newGoBackToArray.push(this.state.selectedCategoryList);
 
 	      this.setState({
-	        breadCrumbs: newBreadCrumbs
+	        goBackToArray: newGoBackToArray
 	      });
 
 	      if (selectedCategory.subcategories) {
@@ -98956,6 +98958,17 @@
 	        }];
 	        this.fadeOutCategories(this, dummyCategoryList);
 	      }
+	    }
+	  }, {
+	    key: 'goBack',
+	    value: function goBack() {
+	      var newGoBackToArray = this.state.goBackToArray;
+
+	      this.fadeOutCategories(this, newGoBackToArray.pop());
+
+	      this.setState({
+	        goBackToArray: newGoBackToArray
+	      });
 	    }
 	  }, {
 	    key: 'fadeOutCategories',
@@ -98993,7 +99006,9 @@
 	            fadeOut: _this2.state.fadeOut
 	          });
 	        }),
-	        _react2.default.createElement(_BreadCrumbs2.default, { breadCrumbs: this.state.breadCrumbs })
+	        this.state.goBackToArray.length !== 0 && _react2.default.createElement(_BackButton2.default, {
+	          goBack: this.goBack
+	        })
 	      );
 	    }
 	  }]);
@@ -99049,23 +99064,23 @@
 
 	      return _react2.default.createElement(
 	        _aframeReact.Entity,
-	        { 'look-at': '#main-camera' },
+	        {
+	          'look-at': '#main-camera',
+	          position: this.props.position.x + ' ' + (this.props.position.y - 2.5) + ' ' + this.props.position.z
+	        },
 	        !this.props.fadeOut && _react2.default.createElement('a-animation', {
 	          attribute: 'position',
-	          from: this.props.position.x + ' ' + (this.props.position.y - 2.5) + ' ' + this.props.position.z,
 	          to: this.props.position.x + ' ' + this.props.position.y + ' ' + this.props.position.z,
 	          dur: '1000'
 	        }),
 	        this.props.fadeOut && _react2.default.createElement('a-animation', {
 	          attribute: 'position',
-	          from: this.props.position.x + ' ' + this.props.position.y + ' ' + this.props.position.z,
 	          to: this.props.position.x + ' ' + (this.props.position.y - 2.5) + ' ' + this.props.position.z,
-	          dur: '1000'
+	          dur: '800'
 	        }),
 	        _react2.default.createElement(
 	          _aframeReact.Entity,
 	          {
-	            position: '0 0 0.5',
 	            geometry: 'primitive: box; depth: 0.1; height: 1; width: 2',
 	            material: { color: 'red' },
 	            onClick: function onClick() {
@@ -99107,8 +99122,6 @@
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -99117,42 +99130,25 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var BreadCrumbs = function (_React$Component) {
-	  _inherits(BreadCrumbs, _React$Component);
-
-	  function BreadCrumbs() {
-	    _classCallCheck(this, BreadCrumbs);
-
-	    return _possibleConstructorReturn(this, (BreadCrumbs.__proto__ || Object.getPrototypeOf(BreadCrumbs)).apply(this, arguments));
-	  }
-
-	  _createClass(BreadCrumbs, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _aframeReact.Entity,
-	        { 'look-at': '#main-camera' },
-	        this.props.breadCrumbs.map(function (crumb, index) {
-	          _react2.default.createElement(_aframeReact.Entity, { text: 'text: ' + crumb, position: '10 10 10' });
-	        })
-	      );
-	    }
-	  }]);
-
-	  return BreadCrumbs;
-	}(_react2.default.Component);
-
-	BreadCrumbs.proptypes = {
-	  breadCrumbs: _react.PropTypes.array
+	exports.default = function (props) {
+	  return _react2.default.createElement(
+	    _aframeReact.Entity,
+	    {
+	      position: '0 2.3 -8',
+	      onClick: props.goBack,
+	      'look-at': '#main-camera'
+	    },
+	    _react2.default.createElement(_aframeReact.Entity, {
+	      geometry: { primitive: 'box', height: 0.3, width: 0.6, depth: 0.1 },
+	      material: { shader: 'flat', color: 'red' }
+	    }),
+	    _react2.default.createElement(_aframeReact.Entity, {
+	      text: 'text: << Back; size: 0.1',
+	      material: { color: 'blue' },
+	      position: '-0.25 -0.025 0.05'
+	    })
+	  );
 	};
-
-	exports.default = BreadCrumbs;
 
 /***/ },
 /* 487 */
