@@ -26,8 +26,8 @@ const Camera = (props) => (
           fill='backwards'
           from='1 1 1'
           to='0.1 0.1 0.1'
-          dur='2000'
-          delay='500'
+          dur='1200'
+          delay='300'
         />
       </Entity>
     </Entity>
