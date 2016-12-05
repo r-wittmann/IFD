@@ -2,15 +2,19 @@ import React, { PropTypes } from 'react'
 import { Entity } from 'aframe-react'
 
 import SelectableBox from './SelectableBox'
+import SelectableProduct from './SelectableProduct'
 import BackButton from './BackButton'
+import ImageTurner from './ImageTurner'
 
 class CategorySelector extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       selectedCategoryList: props.categoryList,
+      productList: [],
       goBackToArray: [],
-      fadeOut: false
+      fadeOut: false,
+      categories: true
     }
 
     this.selectCategory = this.selectCategory.bind(this)
@@ -18,13 +22,14 @@ class CategorySelector extends React.Component {
   }
 
   calculatePosition (index, boxCount) {
-    const distance = 8.5
-    const visionAngle = 90
-    const calcFactor = (2 * (index + 0.5) * Math.PI / boxCount) / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360
+    const distance = 6
+    const visionAngle = 110
+    const categoryPosition = (2 * (index + 0.5) * Math.PI / boxCount) / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360
+    const productPosition = 2 * index * Math.PI / boxCount
 
-    const x = distance * Math.cos(calcFactor)
+    const x = distance * Math.cos(this.state.categories ? categoryPosition : productPosition)
     const y = 1.6
-    const z = -distance * Math.sin(calcFactor)
+    const z = -distance * Math.sin(this.state.categories ? categoryPosition : productPosition)
 
     return {x: x, y: y, z: z}
   }
@@ -41,13 +46,12 @@ class CategorySelector extends React.Component {
       this.fadeOutCategories(this, selectedCategory.subcategoryList)
     } else {
       console.log('switch to products')
-      // untill actual products are available
-      const dummyCategoryList = [{
-        categoryName: 'Dummy',
-        subcategories: false
-      }]
-      this.fadeOutCategories(this, dummyCategoryList)
+      this.fadeOutCategories(this)
     }
+  }
+
+  selectProduct () {
+    console.log('select Product')
   }
 
   goBack () {
@@ -64,10 +68,25 @@ class CategorySelector extends React.Component {
     self.setState({
       fadeOut: true
     })
-    window.setTimeout(() => {
-      self.setState({ selectedCategoryList: [] })
-      self.fadeInCategories(self, categoryList)
-    }, 1000)
+
+    if (categoryList) {
+      window.setTimeout(() => {
+        self.setState({
+          selectedCategoryList: [],
+          productList: [],
+          categories: true
+        })
+        self.fadeInCategories(self, categoryList)
+      }, 1000)
+    } else {
+      window.setTimeout(() => {
+        self.setState({
+          selectedCategoryList: [],
+          categories: false
+        })
+        self.fadeInProducts(self, this.props.productList)
+      }, 1000)
+    }
   }
 
   fadeInCategories (self, categoryList) {
@@ -77,10 +96,17 @@ class CategorySelector extends React.Component {
     })
   }
 
+  fadeInProducts (self, productList) {
+    self.setState({
+      fadeOut: false,
+      productList
+    })
+  }
+
   render () {
     return (
       <Entity>
-        {this.state.selectedCategoryList.map((category, index) =>
+        {this.state.categories && this.state.selectedCategoryList.map((category, index) =>
           <SelectableBox
             key={index}
             category={category}
@@ -89,6 +115,18 @@ class CategorySelector extends React.Component {
             fadeOut={this.state.fadeOut}
           />
         )}
+        {!this.state.categories && this.state.productList.map((product, index) =>
+          <SelectableProduct
+            key={index}
+            product={product}
+            position={this.calculatePosition(index, this.state.productList.length)}
+            onSelect={this.selectProduct}
+            fadeOut={this.state.fadeOut}
+          />
+        )}
+        {!this.state.categories &&
+          <ImageTurner fadeOut={this.state.fadeOut} />
+        }
         {this.state.goBackToArray.length !== 0 &&
           <BackButton
             goBack={this.goBack}
@@ -101,7 +139,8 @@ class CategorySelector extends React.Component {
 }
 
 CategorySelector.proptypes = {
-  categoryList: PropTypes.array
+  categoryList: PropTypes.array,
+  productList: PropTypes.array
 }
 
 export default CategorySelector

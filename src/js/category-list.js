@@ -1,41 +1,6 @@
 const categoryList = [{
-  categoryName: 'Dining Room',
-  subcategories: true,
-  subcategoryList: [{
-    categoryName: 'Dining Tables',
-    subsubcategories: false
-  }, {
-    categoryName: 'Table Ware',
-    subcategories: true,
-    subcategoryList: [{
-      categoryName: 'Cutlery',
-      subcategories: false
-    }, {
-      categoryName: 'Table Linen',
-      subcategories: false
-    }, {
-      categoryName: 'Jugs, Carafes',
-      subcategories: false
-    }, {
-      categoryName: 'Serveware',
-      subcategories: false
-    }]
-  }, {
-    categoryName: 'Decoration',
-    subcategories: true,
-    subcategoryList: [{
-      categoryName: 'Wall Stickers',
-      subcategories: false
-    }, {
-      categoryName: 'Vases, Bowles',
-      subcategories: false
-    }, {
-      categoryName: 'Clocks',
-      subcategories: false
-    }]
-  }]
-}, {
   categoryName: 'Living Room',
+  id: 'livingRooms',
   subcategories: true,
   subcategoryList: [{
     categoryName: 'Sofas',
@@ -61,7 +26,25 @@ const categoryList = [{
     subcategories: false
   }]
 }, {
+  categoryName: 'Bedroom',
+  id: 'bedrooms',
+  subcategories: true,
+  subcategoryList: [{
+    categoryName: 'Wardrobe',
+    id: 'wardrobes',
+    subcategories: false
+  }, {
+    categoryName: 'Bed',
+    id: 'beds',
+    subcategories: false
+  }, {
+    categoryName: 'Night Tables',
+    id: 'nightTables',
+    subcategories: false
+  }]
+}, {
   categoryName: 'Bathroom',
+  id: 'bathrooms',
   subcategories: true,
   subcategoryList: [{
     categoryName: 'Bathroom Sinks',
@@ -75,6 +58,7 @@ const categoryList = [{
   }]
 }, {
   categoryName: 'Outdoor',
+  id: 'outdoors',
   subcategories: false
 }]
 

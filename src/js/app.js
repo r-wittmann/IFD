@@ -12,10 +12,10 @@ import { Scene } from 'aframe-react'
 import Camera from './components/Camera'
 import Sky from './components/Sky'
 import Light from './components/Light'
-import Floor from './components/Floor'
 import CategorySelector from './components/CategorySelector'
 
 import categoryList from './category-list'
+import productList from './product-list'
 
 class VRScene extends React.Component {
   constructor (props) {
@@ -30,9 +30,8 @@ class VRScene extends React.Component {
       <Scene>
         <Camera position={this.state.cameraPosition} />
         <Sky />
-        <Floor />
         <Light />
-        <CategorySelector categoryList={categoryList} />
+        <CategorySelector categoryList={categoryList} productList={productList} />
       </Scene>
     )
   }

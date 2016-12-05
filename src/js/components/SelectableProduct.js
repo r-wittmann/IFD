@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Entity } from 'aframe-react'
 
-class SelectableBox extends React.Component {
+class SelectableProduct extends React.Component {
 
   render () {
     return (
@@ -24,9 +24,9 @@ class SelectableBox extends React.Component {
           />
         )}
         <Entity
-          geometry='primitive: box; depth: 0.1; height: 1; width: 2'
-          material={{ src: `url(../resources/${this.props.category.id}.png)` }}
-          onClick={() => this.props.onSelect(this.props.category)}
+          geometry='primitive: box; depth: 0.1; height: 0.75; width: 1.5'
+          material={{ src: 'url(../resources/bed.png)' }}
+          onClick={() => this.props.onSelect()}
         >
           {/* this.props.category.categoryName.split(' ').map((line, index) =>
             <Entity
@@ -43,11 +43,11 @@ class SelectableBox extends React.Component {
   }
 }
 
-SelectableBox.proptypes = {
-  category: PropTypes.array,
+SelectableProduct.proptypes = {
+  product: PropTypes.array,
   position: PropTypes.object,
   onSelect: PropTypes.func,
   fadeOut: PropTypes.bool
 }
 
-export default SelectableBox
+export default SelectableProduct

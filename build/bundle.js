@@ -87,17 +87,17 @@
 
 	var _Light2 = _interopRequireDefault(_Light);
 
-	var _Floor = __webpack_require__(483);
-
-	var _Floor2 = _interopRequireDefault(_Floor);
-
-	var _CategorySelector = __webpack_require__(484);
+	var _CategorySelector = __webpack_require__(483);
 
 	var _CategorySelector2 = _interopRequireDefault(_CategorySelector);
 
-	var _categoryList = __webpack_require__(487);
+	var _categoryList = __webpack_require__(488);
 
 	var _categoryList2 = _interopRequireDefault(_categoryList);
+
+	var _productList = __webpack_require__(489);
+
+	var _productList2 = _interopRequireDefault(_productList);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -129,9 +129,8 @@
 	        null,
 	        _react2.default.createElement(_Camera2.default, { position: this.state.cameraPosition }),
 	        _react2.default.createElement(_Sky2.default, null),
-	        _react2.default.createElement(_Floor2.default, null),
 	        _react2.default.createElement(_Light2.default, null),
-	        _react2.default.createElement(_CategorySelector2.default, { categoryList: _categoryList2.default })
+	        _react2.default.createElement(_CategorySelector2.default, { categoryList: _categoryList2.default, productList: _productList2.default })
 	      );
 	    }
 	  }]);
@@ -98808,8 +98807,10 @@
 
 	exports.default = function () {
 	  return _react2.default.createElement(_aframeReact.Entity, {
-	    geometry: { primitive: 'sphere', radius: 30 },
-	    material: { shader: 'flat', src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' },
+	    position: '0 3.5 0',
+	    geometry: { primitive: 'box', height: 7, width: 20, depth: 20 }
+	    // material={{ shader: 'flat', src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }}
+	    , material: { color: '#ddd' },
 	    scale: '1 1 -1'
 	  });
 	};
@@ -98836,9 +98837,10 @@
 	  return _react2.default.createElement(
 	    _aframeReact.Entity,
 	    null,
-	    _react2.default.createElement(_aframeReact.Entity, { light: { type: 'ambient', color: '#aaa' } }),
-	    _react2.default.createElement(_aframeReact.Entity, { light: { type: 'directional', intensity: 0.5 }, position: '-1 1 0' }),
-	    _react2.default.createElement(_aframeReact.Entity, { light: { type: 'directional', intensity: 0.5 }, position: '1 1 -1' })
+	    _react2.default.createElement(_aframeReact.Entity, { light: { type: 'ambient', color: '#ccc' } }),
+	    _react2.default.createElement(_aframeReact.Entity, { light: { type: 'directional', intensity: 0.3 }, position: '0 1 -1' }),
+	    _react2.default.createElement(_aframeReact.Entity, { light: { type: 'directional', intensity: 0.4 }, position: '-1 1 0' }),
+	    _react2.default.createElement(_aframeReact.Entity, { light: { type: 'directional', intensity: 0.4 }, position: '1 1 0' })
 	  );
 	};
 
@@ -98846,33 +98848,6 @@
 
 /***/ },
 /* 483 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _aframeReact = __webpack_require__(477);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Floor = function Floor() {
-	  return _react2.default.createElement(_aframeReact.Entity, {
-	    geometry: 'primitive: cylinder; height: 0.01; radius: 11',
-	    material: { color: '#262826' }
-	  });
-	};
-
-	exports.default = Floor;
-
-/***/ },
-/* 484 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -98889,13 +98864,21 @@
 
 	var _aframeReact = __webpack_require__(477);
 
-	var _SelectableBox = __webpack_require__(485);
+	var _SelectableBox = __webpack_require__(484);
 
 	var _SelectableBox2 = _interopRequireDefault(_SelectableBox);
+
+	var _SelectableProduct = __webpack_require__(485);
+
+	var _SelectableProduct2 = _interopRequireDefault(_SelectableProduct);
 
 	var _BackButton = __webpack_require__(486);
 
 	var _BackButton2 = _interopRequireDefault(_BackButton);
+
+	var _ImageTurner = __webpack_require__(487);
+
+	var _ImageTurner2 = _interopRequireDefault(_ImageTurner);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -98915,8 +98898,10 @@
 
 	    _this.state = {
 	      selectedCategoryList: props.categoryList,
+	      productList: [],
 	      goBackToArray: [],
-	      fadeOut: false
+	      fadeOut: false,
+	      categories: true
 	    };
 
 	    _this.selectCategory = _this.selectCategory.bind(_this);
@@ -98927,13 +98912,14 @@
 	  _createClass(CategorySelector, [{
 	    key: 'calculatePosition',
 	    value: function calculatePosition(index, boxCount) {
-	      var distance = 8.5;
-	      var visionAngle = 90;
-	      var calcFactor = 2 * (index + 0.5) * Math.PI / boxCount / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360;
+	      var distance = 6;
+	      var visionAngle = 110;
+	      var categoryPosition = 2 * (index + 0.5) * Math.PI / boxCount / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360;
+	      var productPosition = 2 * index * Math.PI / boxCount;
 
-	      var x = distance * Math.cos(calcFactor);
+	      var x = distance * Math.cos(this.state.categories ? categoryPosition : productPosition);
 	      var y = 1.6;
-	      var z = -distance * Math.sin(calcFactor);
+	      var z = -distance * Math.sin(this.state.categories ? categoryPosition : productPosition);
 
 	      return { x: x, y: y, z: z };
 	    }
@@ -98951,13 +98937,13 @@
 	        this.fadeOutCategories(this, selectedCategory.subcategoryList);
 	      } else {
 	        console.log('switch to products');
-	        // untill actual products are available
-	        var dummyCategoryList = [{
-	          categoryName: 'Dummy',
-	          subcategories: false
-	        }];
-	        this.fadeOutCategories(this, dummyCategoryList);
+	        this.fadeOutCategories(this);
 	      }
+	    }
+	  }, {
+	    key: 'selectProduct',
+	    value: function selectProduct() {
+	      console.log('select Product');
 	    }
 	  }, {
 	    key: 'goBack',
@@ -98973,13 +98959,30 @@
 	  }, {
 	    key: 'fadeOutCategories',
 	    value: function fadeOutCategories(self, categoryList) {
+	      var _this2 = this;
+
 	      self.setState({
 	        fadeOut: true
 	      });
-	      window.setTimeout(function () {
-	        self.setState({ selectedCategoryList: [] });
-	        self.fadeInCategories(self, categoryList);
-	      }, 1000);
+
+	      if (categoryList) {
+	        window.setTimeout(function () {
+	          self.setState({
+	            selectedCategoryList: [],
+	            productList: [],
+	            categories: true
+	          });
+	          self.fadeInCategories(self, categoryList);
+	        }, 1000);
+	      } else {
+	        window.setTimeout(function () {
+	          self.setState({
+	            selectedCategoryList: [],
+	            categories: false
+	          });
+	          self.fadeInProducts(self, _this2.props.productList);
+	        }, 1000);
+	      }
 	    }
 	  }, {
 	    key: 'fadeInCategories',
@@ -98990,22 +98993,40 @@
 	      });
 	    }
 	  }, {
+	    key: 'fadeInProducts',
+	    value: function fadeInProducts(self, productList) {
+	      self.setState({
+	        fadeOut: false,
+	        productList: productList
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      return _react2.default.createElement(
 	        _aframeReact.Entity,
 	        null,
-	        this.state.selectedCategoryList.map(function (category, index) {
+	        this.state.categories && this.state.selectedCategoryList.map(function (category, index) {
 	          return _react2.default.createElement(_SelectableBox2.default, {
 	            key: index,
 	            category: category,
-	            position: _this2.calculatePosition(index, _this2.state.selectedCategoryList.length),
-	            onSelect: _this2.selectCategory,
-	            fadeOut: _this2.state.fadeOut
+	            position: _this3.calculatePosition(index, _this3.state.selectedCategoryList.length),
+	            onSelect: _this3.selectCategory,
+	            fadeOut: _this3.state.fadeOut
 	          });
 	        }),
+	        !this.state.categories && this.state.productList.map(function (product, index) {
+	          return _react2.default.createElement(_SelectableProduct2.default, {
+	            key: index,
+	            product: product,
+	            position: _this3.calculatePosition(index, _this3.state.productList.length),
+	            onSelect: _this3.selectProduct,
+	            fadeOut: _this3.state.fadeOut
+	          });
+	        }),
+	        !this.state.categories && _react2.default.createElement(_ImageTurner2.default, { fadeOut: this.state.fadeOut }),
 	        this.state.goBackToArray.length !== 0 && _react2.default.createElement(_BackButton2.default, {
 	          goBack: this.goBack
 	        })
@@ -99017,13 +99038,14 @@
 	}(_react2.default.Component);
 
 	CategorySelector.proptypes = {
-	  categoryList: _react.PropTypes.array
+	  categoryList: _react.PropTypes.array,
+	  productList: _react.PropTypes.array
 	};
 
 	exports.default = CategorySelector;
 
 /***/ },
-/* 485 */
+/* 484 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -99076,26 +99098,15 @@
 	        this.props.fadeOut && _react2.default.createElement('a-animation', {
 	          attribute: 'position',
 	          to: this.props.position.x + ' ' + (this.props.position.y - 2.5) + ' ' + this.props.position.z,
-	          dur: '800'
+	          dur: '1000'
 	        }),
-	        _react2.default.createElement(
-	          _aframeReact.Entity,
-	          {
-	            geometry: 'primitive: box; depth: 0.1; height: 1; width: 2',
-	            material: { color: 'red' },
-	            onClick: function onClick() {
-	              return _this2.props.onSelect(_this2.props.category);
-	            }
-	          },
-	          this.props.category.categoryName.split(' ').map(function (line, index) {
-	            return _react2.default.createElement(_aframeReact.Entity, {
-	              key: index,
-	              text: 'text: ' + line + '; size: 0.25',
-	              material: { color: 'blue' },
-	              position: '-0.8 ' + (0.1 - index * 0.4) + ' 0.05'
-	            });
-	          })
-	        )
+	        _react2.default.createElement(_aframeReact.Entity, {
+	          geometry: 'primitive: box; depth: 0.1; height: 1; width: 2',
+	          material: { src: 'url(../resources/' + this.props.category.id + '.png)' },
+	          onClick: function onClick() {
+	            return _this2.props.onSelect(_this2.props.category);
+	          }
+	        })
 	      );
 	    }
 	  }]);
@@ -99111,6 +99122,85 @@
 	};
 
 	exports.default = SelectableBox;
+
+/***/ },
+/* 485 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _aframeReact = __webpack_require__(477);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SelectableProduct = function (_React$Component) {
+	  _inherits(SelectableProduct, _React$Component);
+
+	  function SelectableProduct() {
+	    _classCallCheck(this, SelectableProduct);
+
+	    return _possibleConstructorReturn(this, (SelectableProduct.__proto__ || Object.getPrototypeOf(SelectableProduct)).apply(this, arguments));
+	  }
+
+	  _createClass(SelectableProduct, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        _aframeReact.Entity,
+	        {
+	          'look-at': '#main-camera',
+	          position: this.props.position.x + ' ' + (this.props.position.y - 2.5) + ' ' + this.props.position.z
+	        },
+	        !this.props.fadeOut && _react2.default.createElement('a-animation', {
+	          attribute: 'position',
+	          to: this.props.position.x + ' ' + this.props.position.y + ' ' + this.props.position.z,
+	          dur: '1000'
+	        }),
+	        this.props.fadeOut && _react2.default.createElement('a-animation', {
+	          attribute: 'position',
+	          to: this.props.position.x + ' ' + (this.props.position.y - 2.5) + ' ' + this.props.position.z,
+	          dur: '1000'
+	        }),
+	        _react2.default.createElement(_aframeReact.Entity, {
+	          geometry: 'primitive: box; depth: 0.1; height: 0.75; width: 1.5',
+	          material: { src: 'url(../resources/bed.png)' },
+	          onClick: function onClick() {
+	            return _this2.props.onSelect();
+	          }
+	        })
+	      );
+	    }
+	  }]);
+
+	  return SelectableProduct;
+	}(_react2.default.Component);
+
+	SelectableProduct.proptypes = {
+	  product: _react.PropTypes.array,
+	  position: _react.PropTypes.object,
+	  onSelect: _react.PropTypes.func,
+	  fadeOut: _react.PropTypes.bool
+	};
+
+	exports.default = SelectableProduct;
 
 /***/ },
 /* 486 */
@@ -99152,6 +99242,82 @@
 
 /***/ },
 /* 487 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _aframeReact = __webpack_require__(477);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ImageTurner = function (_React$Component) {
+	  _inherits(ImageTurner, _React$Component);
+
+	  function ImageTurner() {
+	    _classCallCheck(this, ImageTurner);
+
+	    return _possibleConstructorReturn(this, (ImageTurner.__proto__ || Object.getPrototypeOf(ImageTurner)).apply(this, arguments));
+	  }
+
+	  _createClass(ImageTurner, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _aframeReact.Entity,
+	        { position: '0 -2 0' },
+	        !this.props.fadeOut && _react2.default.createElement('a-animation', {
+	          attribute: 'position',
+	          to: '0 0 0',
+	          dur: '1000'
+	        }),
+	        this.props.fadeOut && _react2.default.createElement('a-animation', {
+	          attribute: 'position',
+	          to: '0 -2 0',
+	          dur: '1000'
+	        }),
+	        _react2.default.createElement(_aframeReact.Entity, {
+	          'look-at': '#main-camera',
+	          geometry: { primitive: 'box', width: 0.5, height: 0.25, depth: 0.1 },
+	          material: { src: 'url(../resources/arrowLeft.png)' },
+	          position: '-4 0.8 -4'
+	        }),
+	        _react2.default.createElement(_aframeReact.Entity, {
+	          'look-at': '#main-camera',
+	          geometry: { primitive: 'box', width: 0.5, height: 0.25, depth: 0.1 },
+	          material: { src: 'url(../resources/arrowRight.png)' },
+	          position: '4 0.8 -4'
+	        })
+	      );
+	    }
+	  }]);
+
+	  return ImageTurner;
+	}(_react2.default.Component);
+
+	ImageTurner.proptypes = {
+	  fadeOut: _react.PropTypes.bool
+	};
+
+	exports.default = ImageTurner;
+
+/***/ },
+/* 488 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -99160,43 +99326,8 @@
 	  value: true
 	});
 	var categoryList = [{
-	  categoryName: 'Dining Room',
-	  subcategories: true,
-	  subcategoryList: [{
-	    categoryName: 'Dining Tables',
-	    subsubcategories: false
-	  }, {
-	    categoryName: 'Table Ware',
-	    subcategories: true,
-	    subcategoryList: [{
-	      categoryName: 'Cutlery',
-	      subcategories: false
-	    }, {
-	      categoryName: 'Table Linen',
-	      subcategories: false
-	    }, {
-	      categoryName: 'Jugs, Carafes',
-	      subcategories: false
-	    }, {
-	      categoryName: 'Serveware',
-	      subcategories: false
-	    }]
-	  }, {
-	    categoryName: 'Decoration',
-	    subcategories: true,
-	    subcategoryList: [{
-	      categoryName: 'Wall Stickers',
-	      subcategories: false
-	    }, {
-	      categoryName: 'Vases, Bowles',
-	      subcategories: false
-	    }, {
-	      categoryName: 'Clocks',
-	      subcategories: false
-	    }]
-	  }]
-	}, {
 	  categoryName: 'Living Room',
+	  id: 'livingRooms',
 	  subcategories: true,
 	  subcategoryList: [{
 	    categoryName: 'Sofas',
@@ -99222,7 +99353,25 @@
 	    subcategories: false
 	  }]
 	}, {
+	  categoryName: 'Bedroom',
+	  id: 'bedrooms',
+	  subcategories: true,
+	  subcategoryList: [{
+	    categoryName: 'Wardrobe',
+	    id: 'wardrobes',
+	    subcategories: false
+	  }, {
+	    categoryName: 'Bed',
+	    id: 'beds',
+	    subcategories: false
+	  }, {
+	    categoryName: 'Night Tables',
+	    id: 'nightTables',
+	    subcategories: false
+	  }]
+	}, {
 	  categoryName: 'Bathroom',
+	  id: 'bathrooms',
 	  subcategories: true,
 	  subcategoryList: [{
 	    categoryName: 'Bathroom Sinks',
@@ -99236,10 +99385,132 @@
 	  }]
 	}, {
 	  categoryName: 'Outdoor',
+	  id: 'outdoors',
 	  subcategories: false
 	}];
 
 	exports.default = categoryList;
+
+/***/ },
+/* 489 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var productList = [{
+	  name: 'Bed 1',
+	  id: 'bed1',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 2',
+	  id: 'bed2',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 3',
+	  id: 'bed3',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 4',
+	  id: 'bed4',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 5',
+	  id: 'bed5',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 6',
+	  id: 'bed6',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 7',
+	  id: 'bed7',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 8',
+	  id: 'bed8',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 9',
+	  id: 'bed9',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 10',
+	  id: 'bed10',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 11',
+	  id: 'bed11',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 12',
+	  id: 'bed12',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 13',
+	  id: 'bed13',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 14',
+	  id: 'bed14',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 15',
+	  id: 'bed15',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 16',
+	  id: 'bed16',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 17',
+	  id: 'bed17',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}, {
+	  name: 'Bed 18',
+	  id: 'bed18',
+	  price: '119',
+	  colors: ['white', 'blue', 'grey'],
+	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	}];
+
+	exports.default = productList;
 
 /***/ }
 /******/ ]);
