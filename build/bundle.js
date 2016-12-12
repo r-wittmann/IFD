@@ -99001,6 +99001,19 @@
 	      });
 	    }
 	  }, {
+	    key: 'showBackButton',
+	    value: function showBackButton(self) {
+	      var showButton = true;
+
+	      if (self.state.goBackToArray.length === 0) showButton = false;
+	      if (self.state.goBackToArray.length === 0 && this.state.fadeOut) showButton = true;
+
+	      // if (self.state.goBackToArray.length > 1) showButton = true
+	      // else if (self.state.goBackToArray.length === 1 && !self.state.fadeOut) showButton = true
+
+	      return showButton;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this3 = this;
@@ -99027,8 +99040,9 @@
 	          });
 	        }),
 	        !this.state.categories && _react2.default.createElement(_ImageTurner2.default, { fadeOut: this.state.fadeOut }),
-	        this.state.goBackToArray.length !== 0 && _react2.default.createElement(_BackButton2.default, {
-	          goBack: this.goBack
+	        this.showBackButton(this) && _react2.default.createElement(_BackButton2.default, {
+	          goBack: this.goBack,
+	          fadeOut: this.state.fadeOut
 	        })
 	      );
 	    }
@@ -99224,17 +99238,27 @@
 	  return _react2.default.createElement(
 	    _aframeReact.Entity,
 	    {
-	      position: '0 2.3 -8',
+	      position: '0 -0.7 -6',
 	      onClick: props.goBack,
 	      'look-at': '#main-camera'
 	    },
+	    !props.fadeOut && _react2.default.createElement('a-animation', {
+	      attribute: 'position',
+	      to: '0 2.3 -6',
+	      dur: '1000'
+	    }),
+	    props.fadeOut && _react2.default.createElement('a-animation', {
+	      attribute: 'position',
+	      to: '0 -0.7 -6',
+	      dur: '1000'
+	    }),
 	    _react2.default.createElement(_aframeReact.Entity, {
 	      geometry: { primitive: 'box', height: 0.3, width: 0.6, depth: 0.1 },
-	      material: { shader: 'flat', color: 'red' }
+	      material: { shader: 'flat', color: '#eee' }
 	    }),
 	    _react2.default.createElement(_aframeReact.Entity, {
 	      text: 'text: << Back; size: 0.1',
-	      material: { color: 'blue' },
+	      material: { color: 'black' },
 	      position: '-0.25 -0.025 0.05'
 	    })
 	  );

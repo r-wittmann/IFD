@@ -103,6 +103,18 @@ class CategorySelector extends React.Component {
     })
   }
 
+  showBackButton (self) {
+    var showButton = true
+
+    if (self.state.goBackToArray.length === 0) showButton = false
+    if (self.state.goBackToArray.length === 0 && this.state.fadeOut) showButton = true
+
+    // if (self.state.goBackToArray.length > 1) showButton = true
+    // else if (self.state.goBackToArray.length === 1 && !self.state.fadeOut) showButton = true
+
+    return showButton
+  }
+
   render () {
     return (
       <Entity>
@@ -127,9 +139,10 @@ class CategorySelector extends React.Component {
         {!this.state.categories &&
           <ImageTurner fadeOut={this.state.fadeOut} />
         }
-        {this.state.goBackToArray.length !== 0 &&
+        {this.showBackButton(this) &&
           <BackButton
             goBack={this.goBack}
+            fadeOut={this.state.fadeOut}
           />
         }
       </Entity>
