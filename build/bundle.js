@@ -98753,12 +98753,15 @@
 	    _react2.default.createElement(
 	      _aframeReact.Entity,
 	      _extends({ id: 'main-camera', camera: 'userHeight: 1.6', 'look-controls': true, 'wasd-controls': '' }, props),
+	      _react2.default.createElement('a-entity', {
+	        raycaster: 'far: 8; near: 6.1;',
+	        cursor: 'fuse: true; fuseTimeout: 1;'
+	      }),
 	      _react2.default.createElement(
 	        _aframeReact.Entity,
 	        {
 	          cursor: '' // selection should work by clicking on desctop and by fusing on the mobile device
-	          , objects: '.clickable',
-	          position: '0 0 -1',
+	          , position: '0 0 -1',
 	          geometry: 'primitive: ring; radiusInner: 0.015; radiusOuter: 0.02',
 	          material: 'color: green; shader: flat'
 	        },
@@ -98806,13 +98809,26 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = function () {
-	  return _react2.default.createElement(_aframeReact.Entity, {
-	    position: '0 3.5 0',
-	    geometry: { primitive: 'box', height: 7, width: 20, depth: 20 }
-	    // material={{ shader: 'flat', src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }}
-	    , material: { color: '#ddd' },
-	    scale: '1 1 -1'
-	  });
+	  return _react2.default.createElement(
+	    _aframeReact.Entity,
+	    null,
+	    _react2.default.createElement(_aframeReact.Entity, {
+	      position: '0 3.5 0',
+	      geometry: { primitive: 'box', height: 7, width: 20, depth: 20 }
+	      // material={{ shader: 'flat', src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }}
+	      , material: { color: '#ddd' },
+	      scale: '1 1 -1'
+	    }),
+	    _react2.default.createElement(_aframeReact.Entity, {
+	      position: '0 1.6 0',
+	      geometry: { primitive: 'sphere', radius: 6.1 },
+	      material: { opacity: 0.5 },
+	      scale: '1 1 -1',
+	      onClick: function onClick() {
+	        console.log('click');
+	      }
+	    })
+	  );
 	};
 
 /***/ },
@@ -98901,7 +98917,9 @@
 	      productList: [],
 	      goBackToArray: [],
 	      fadeOut: false,
-	      categories: true
+	      categories: true,
+	      turnProducts: 0,
+	      productRotation: '0 50 0'
 	    };
 
 	    _this.selectCategory = _this.selectCategory.bind(_this);
@@ -98912,14 +98930,22 @@
 	  _createClass(CategorySelector, [{
 	    key: 'calculatePosition',
 	    value: function calculatePosition(index, boxCount) {
-	      var distance = 6;
+	      var x = void 0,
+	          y = void 0,
+	          z = void 0;
 	      var visionAngle = 110;
 	      var categoryPosition = 2 * (index + 0.5) * Math.PI / boxCount / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360;
 	      var productPosition = 2 * index * Math.PI / boxCount;
 
-	      var x = distance * Math.cos(this.state.categories ? categoryPosition : productPosition);
-	      var y = 1.6;
-	      var z = -distance * Math.sin(this.state.categories ? categoryPosition : productPosition);
+	      if (this.state.categories) {
+	        x = 6 * Math.cos(categoryPosition);
+	        y = 1.6;
+	        z = -6 * Math.sin(categoryPosition);
+	      } else {
+	        x = 6.2 * Math.cos(productPosition);
+	        y = 1.6;
+	        z = -6.2 * Math.sin(productPosition);
+	      }
 
 	      return { x: x, y: y, z: z };
 	    }
@@ -99037,17 +99063,41 @@
 	            fadeOut: _this3.state.fadeOut
 	          });
 	        }),
-	        !this.state.categories && this.state.productList[this.state.categoryId].map(function (product, index) {
-	          return _react2.default.createElement(_SelectableProduct2.default, {
-	            key: index,
-	            product: product,
-	            position: _this3.calculatePosition(index, _this3.state.productList[_this3.state.categoryId].length),
-	            onSelect: _this3.selectProduct,
-	            fadeOut: _this3.state.fadeOut,
-	            category: _this3.state.categoryId
-	          });
+	        !this.state.categories && _react2.default.createElement(
+	          _aframeReact.Entity,
+	          null,
+	          this.state.productList[this.state.categoryId].map(function (product, index) {
+	            return _react2.default.createElement(_SelectableProduct2.default, {
+	              key: index,
+	              product: product,
+	              position: _this3.calculatePosition(index, _this3.state.productList[_this3.state.categoryId].length),
+	              onSelect: _this3.selectProduct,
+	              fadeOut: _this3.state.fadeOut,
+	              category: _this3.state.categoryId
+
+	            });
+	          }),
+	          this.state.turnProducts === -1 && _react2.default.createElement('a-animation', {
+	            attribute: 'rotation',
+	            dur: '4000000',
+	            to: '0 36000 0',
+	            repeat: 'indefinite',
+	            easing: 'linear'
+	          }),
+	          this.state.turnProducts === 1 && _react2.default.createElement('a-animation', {
+	            attribute: 'rotation',
+	            dur: '4000000',
+	            to: '0 -36000 0',
+	            repeat: 'indefinite',
+	            easing: 'linear'
+	          })
+	        ),
+	        !this.state.categories && _react2.default.createElement(_ImageTurner2.default, {
+	          fadeOut: this.state.fadeOut,
+	          turnImage: function turnImage(direction) {
+	            return _this3.setState({ turnProducts: direction });
+	          }
 	        }),
-	        !this.state.categories && _react2.default.createElement(_ImageTurner2.default, { fadeOut: this.state.fadeOut }),
 	        this.showBackButton(this) && _react2.default.createElement(_BackButton2.default, {
 	          goBack: this.goBack,
 	          fadeOut: this.state.fadeOut
@@ -99311,6 +99361,8 @@
 	  _createClass(ImageTurner, [{
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
 	        _aframeReact.Entity,
 	        { position: '0 -2 0' },
@@ -99326,15 +99378,39 @@
 	        }),
 	        _react2.default.createElement(_aframeReact.Entity, {
 	          'look-at': '#main-camera',
-	          geometry: { primitive: 'box', width: 0.5, height: 0.25, depth: 0.1 },
-	          material: { src: 'url(../resources/arrowLeft.png)' },
-	          position: '-4 0.8 -4'
+	          position: '-5 0.8 -5',
+	          geometry: { primitive: 'box', width: 5, height: 5, depth: 0.1 },
+	          material: { color: 'white', opacity: 0 },
+	          onClick: function onClick() {
+	            return _this2.props.turnImage(0);
+	          }
 	        }),
 	        _react2.default.createElement(_aframeReact.Entity, {
 	          'look-at': '#main-camera',
-	          geometry: { primitive: 'box', width: 0.5, height: 0.25, depth: 0.1 },
+	          geometry: { primitive: 'box', width: 0.7, height: 0.35, depth: 0.1 },
+	          material: { src: 'url(../resources/arrowLeft.png)' },
+	          position: '-5 0.8 -4.99',
+	          onClick: function onClick() {
+	            return _this2.props.turnImage(1);
+	          }
+	        }),
+	        _react2.default.createElement(_aframeReact.Entity, {
+	          'look-at': '#main-camera',
+	          position: '5 0.8 -5',
+	          geometry: { primitive: 'box', width: 5, height: 5, depth: 0.1 },
+	          material: { color: 'white', opacity: 0 },
+	          onClick: function onClick() {
+	            return _this2.props.turnImage(0);
+	          }
+	        }),
+	        _react2.default.createElement(_aframeReact.Entity, {
+	          'look-at': '#main-camera',
+	          geometry: { primitive: 'box', width: 0.7, height: 0.35, depth: 0.1 },
 	          material: { src: 'url(../resources/arrowRight.png)' },
-	          position: '4 0.8 -4'
+	          position: '5 0.8 -4.99',
+	          onClick: function onClick() {
+	            return _this2.props.turnImage(-1);
+	          }
 	        })
 	      );
 	    }
@@ -99344,7 +99420,8 @@
 	}(_react2.default.Component);
 
 	ImageTurner.proptypes = {
-	  fadeOut: _react.PropTypes.bool
+	  fadeOut: _react.PropTypes.bool,
+	  turnImage: _react.PropTypes.func
 	};
 
 	exports.default = ImageTurner;

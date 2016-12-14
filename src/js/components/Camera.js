@@ -4,9 +4,13 @@ import { Entity } from 'aframe-react'
 const Camera = (props) => (
   <Entity>
     <Entity id='main-camera' camera='userHeight: 1.6' look-controls wasd-controls='' {...props}>
+      {/* hover cursor */}
+      <a-entity
+        raycaster='far: 8; near: 6.1;'
+        cursor='fuse: true; fuseTimeout: 1;'
+      />
       <Entity
         cursor='' // selection should work by clicking on desctop and by fusing on the mobile device
-        objects='.clickable'
         position='0 0 -1'
         geometry='primitive: ring; radiusInner: 0.015; radiusOuter: 0.02'
         material='color: green; shader: flat'

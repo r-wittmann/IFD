@@ -5,6 +5,7 @@ class ImageTurner extends React.Component {
 
   render () {
     return (
+
       <Entity position='0 -2 0'>
         {!this.props.fadeOut && (
           <a-animation
@@ -22,15 +23,31 @@ class ImageTurner extends React.Component {
         )}
         <Entity
           look-at='#main-camera'
-          geometry={{ primitive: 'box', width: 0.5, height: 0.25, depth: 0.1 }}
-          material={{ src: 'url(../resources/arrowLeft.png)' }}
-          position='-4 0.8 -4'
+          position='-5 0.8 -5'
+          geometry={{ primitive: 'box', width: 5, height: 5, depth: 0.1 }}
+          material={{ color: 'white', opacity: 0 }}
+          onClick={() => this.props.turnImage(0)}
         />
         <Entity
           look-at='#main-camera'
-          geometry={{ primitive: 'box', width: 0.5, height: 0.25, depth: 0.1 }}
+          geometry={{ primitive: 'box', width: 0.7, height: 0.35, depth: 0.1 }}
+          material={{ src: 'url(../resources/arrowLeft.png)' }}
+          position='-5 0.8 -4.99'
+          onClick={() => this.props.turnImage(1)}
+        />
+        <Entity
+          look-at='#main-camera'
+          position='5 0.8 -5'
+          geometry={{ primitive: 'box', width: 5, height: 5, depth: 0.1 }}
+          material={{ color: 'white', opacity: 0 }}
+          onClick={() => this.props.turnImage(0)}
+        />
+        <Entity
+          look-at='#main-camera'
+          geometry={{ primitive: 'box', width: 0.7, height: 0.35, depth: 0.1 }}
           material={{ src: 'url(../resources/arrowRight.png)' }}
-          position='4 0.8 -4'
+          position='5 0.8 -4.99'
+          onClick={() => this.props.turnImage(-1)}
         />
       </Entity>
     )
@@ -38,7 +55,8 @@ class ImageTurner extends React.Component {
 }
 
 ImageTurner.proptypes = {
-  fadeOut: PropTypes.bool
+  fadeOut: PropTypes.bool,
+  turnImage: PropTypes.func
 }
 
 export default ImageTurner

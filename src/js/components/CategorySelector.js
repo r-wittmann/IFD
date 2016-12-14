@@ -14,7 +14,9 @@ class CategorySelector extends React.Component {
       productList: [],
       goBackToArray: [],
       fadeOut: false,
-      categories: true
+      categories: true,
+      turnProducts: 0,
+      productRotation: '0 50 0'
     }
 
     this.selectCategory = this.selectCategory.bind(this)
@@ -22,14 +24,20 @@ class CategorySelector extends React.Component {
   }
 
   calculatePosition (index, boxCount) {
-    const distance = 6
+    let x, y, z
     const visionAngle = 110
     const categoryPosition = (2 * (index + 0.5) * Math.PI / boxCount) / (360 / visionAngle) + (180 - visionAngle) * Math.PI / 360
     const productPosition = 2 * index * Math.PI / boxCount
 
-    const x = distance * Math.cos(this.state.categories ? categoryPosition : productPosition)
-    const y = 1.6
-    const z = -distance * Math.sin(this.state.categories ? categoryPosition : productPosition)
+    if (this.state.categories) {
+      x = 6 * Math.cos(categoryPosition)
+      y = 1.6
+      z = -6 * Math.sin(categoryPosition)
+    } else {
+      x = 6.2 * Math.cos(productPosition)
+      y = 1.6
+      z = -6.2 * Math.sin(productPosition)
+    }
 
     return {x: x, y: y, z: z}
   }
@@ -134,18 +142,44 @@ class CategorySelector extends React.Component {
             fadeOut={this.state.fadeOut}
           />
         )}
-        {!this.state.categories && this.state.productList[this.state.categoryId].map((product, index) =>
-          <SelectableProduct
-            key={index}
-            product={product}
-            position={this.calculatePosition(index, this.state.productList[this.state.categoryId].length)}
-            onSelect={this.selectProduct}
-            fadeOut={this.state.fadeOut}
-            category={this.state.categoryId}
-          />
-        )}
         {!this.state.categories &&
-          <ImageTurner fadeOut={this.state.fadeOut} />
+          <Entity>
+            {this.state.productList[this.state.categoryId].map((product, index) =>
+              <SelectableProduct
+                key={index}
+                product={product}
+                position={this.calculatePosition(index, this.state.productList[this.state.categoryId].length)}
+                onSelect={this.selectProduct}
+                fadeOut={this.state.fadeOut}
+                category={this.state.categoryId}
+
+              />
+            )}
+            {this.state.turnProducts === -1 &&
+              <a-animation
+                attribute='rotation'
+                dur='4000000'
+                to='0 36000 0'
+                repeat='indefinite'
+                easing='linear'
+              />
+            }
+            {this.state.turnProducts === 1 &&
+              <a-animation
+                attribute='rotation'
+                dur='4000000'
+                to='0 -36000 0'
+                repeat='indefinite'
+                easing='linear'
+              />
+            }
+          </Entity>
+        }
+        {!this.state.categories &&
+          <ImageTurner
+            fadeOut={this.state.fadeOut}
+            turnImage={(direction) => this.setState({turnProducts: direction})}
+          />
         }
         {this.showBackButton(this) &&
           <BackButton

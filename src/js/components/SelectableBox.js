@@ -27,17 +27,7 @@ class SelectableBox extends React.Component {
           geometry='primitive: box; depth: 0.1; height: 1; width: 2'
           material={{ src: `url(../resources/categories/${this.props.category.id}.png)` }}
           onClick={() => this.props.onSelect(this.props.category)}
-        >
-          {/* this.props.category.categoryName.split(' ').map((line, index) =>
-            <Entity
-              key={index}
-              text={`text: ${line}; size: 0.25`}
-              material={{color: 'blue'}}
-              position={`-0.8 ${0.1 - index * 0.4} 0.05`}
-            />
-          ) */}
-
-        </Entity>
+        />
       </Entity>
     )
   }
