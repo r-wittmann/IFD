@@ -25,19 +25,9 @@ class SelectableProduct extends React.Component {
         )}
         <Entity
           geometry='primitive: box; depth: 0.1; height: 0.75; width: 1.5'
-          material={{ src: 'url(../resources/bed.png)' }}
+          material={{ src: `url(../resources/${this.props.category}/${this.props.product.id}.png)` }}
           onClick={() => this.props.onSelect()}
-        >
-          {/* this.props.category.categoryName.split(' ').map((line, index) =>
-            <Entity
-              key={index}
-              text={`text: ${line}; size: 0.25`}
-              material={{color: 'blue'}}
-              position={`-0.8 ${0.1 - index * 0.4} 0.05`}
-            />
-          ) */}
-
-        </Entity>
+        />
       </Entity>
     )
   }
@@ -47,7 +37,8 @@ SelectableProduct.proptypes = {
   product: PropTypes.array,
   position: PropTypes.object,
   onSelect: PropTypes.func,
-  fadeOut: PropTypes.bool
+  fadeOut: PropTypes.bool,
+  category: PropTypes.string
 }
 
 export default SelectableProduct

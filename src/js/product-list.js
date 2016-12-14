@@ -1,237 +1,249 @@
-const productList = [{
-  name: 'Bed 1',
-  id: 'bed1',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 2',
-  id: 'bed2',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 3',
-  id: 'bed3',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 4',
-  id: 'bed4',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 5',
-  id: 'bed5',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 6',
-  id: 'bed6',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 7',
-  id: 'bed7',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 8',
-  id: 'bed8',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 9',
-  id: 'bed9',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 10',
-  id: 'bed10',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 11',
-  id: 'bed11',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 12',
-  id: 'bed12',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 13',
-  id: 'bed13',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 14',
-  id: 'bed14',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 15',
-  id: 'bed15',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 16',
-  id: 'bed16',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 17',
-  id: 'bed17',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}, {
-  name: 'Bed 18',
-  id: 'bed18',
-  price: '119',
-  colors: [
-    'white',
-    'blue',
-    'grey'
-  ],
-  additional: [
-    'paragraph 1 of additional information',
-    'paragraph 2 with some other information'
-  ]
-}]
+const productList = {
+  outdoors: [],
+  bathmats: [],
+  towels: [],
+  bathroomLigthing: [],
+  bathroomSinks: [],
+  nightTables: [],
+  beds: [{
+    name: 'Luxurious Duo',
+    id: 'bed1',
+    price: '119',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }],
+  wardrobes: [],
+  sideTables: [],
+  bookcases: [],
+  sofas: [{
+    name: '',
+    id: 'sofa1',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa2',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa3',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa4',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa5',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa6',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa7',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa8',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa9',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa10',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa11',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa12',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa13',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa14',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa15',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa16',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sofa17',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }]
+}
 
 export default productList

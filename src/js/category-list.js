@@ -4,7 +4,8 @@ const categoryList = [{
   subcategories: true,
   subcategoryList: [{
     categoryName: 'Sofas',
-    subcategories: true,
+    id: 'sofas',
+    subcategories: false,
     subcategoryList: [{
       categoryName: 'Sofa Beds',
       subcategories: false
@@ -20,9 +21,11 @@ const categoryList = [{
     }]
   }, {
     categoryName: 'Bookcases',
+    id: 'bookcases',
     subcategories: false
   }, {
     categoryName: 'Side Tables',
+    id: 'sideTables',
     subcategories: false
   }]
 }, {
@@ -48,12 +51,19 @@ const categoryList = [{
   subcategories: true,
   subcategoryList: [{
     categoryName: 'Bathroom Sinks',
+    id: 'bathroomSinks',
     subcategories: false
   }, {
     categoryName: 'Bathroom Lighting',
+    id: 'bathroomLighting',
     subcategories: false
   }, {
-    categoryName: 'Towels, Bathmats',
+    categoryName: 'Towels',
+    id: 'towels',
+    subcategories: false
+  }, {
+    categoryName: 'Bathmats',
+    id: 'bathmats',
     subcategories: false
   }]
 }, {

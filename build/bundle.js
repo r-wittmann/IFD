@@ -98926,6 +98926,10 @@
 	  }, {
 	    key: 'selectCategory',
 	    value: function selectCategory(selectedCategory) {
+	      this.setState({
+	        fadeOut: true
+	      });
+
 	      var newGoBackToArray = this.state.goBackToArray;
 	      newGoBackToArray.push(this.state.selectedCategoryList);
 
@@ -98937,6 +98941,9 @@
 	        this.fadeOutCategories(this, selectedCategory.subcategoryList);
 	      } else {
 	        console.log('switch to products');
+	        this.setState({
+	          categoryId: selectedCategory.id
+	        });
 	        this.fadeOutCategories(this);
 	      }
 	    }
@@ -98948,6 +98955,10 @@
 	  }, {
 	    key: 'goBack',
 	    value: function goBack() {
+	      this.setState({
+	        fadeOut: true
+	      });
+
 	      var newGoBackToArray = this.state.goBackToArray;
 
 	      this.fadeOutCategories(this, newGoBackToArray.pop());
@@ -98961,10 +98972,6 @@
 	    value: function fadeOutCategories(self, categoryList) {
 	      var _this2 = this;
 
-	      self.setState({
-	        fadeOut: true
-	      });
-
 	      if (categoryList) {
 	        window.setTimeout(function () {
 	          self.setState({
@@ -98977,8 +98984,7 @@
 	      } else {
 	        window.setTimeout(function () {
 	          self.setState({
-	            selectedCategoryList: [],
-	            categories: false
+	            selectedCategoryList: []
 	          });
 	          self.fadeInProducts(self, _this2.props.productList);
 	        }, 1000);
@@ -98997,6 +99003,7 @@
 	    value: function fadeInProducts(self, productList) {
 	      self.setState({
 	        fadeOut: false,
+	        categories: false,
 	        productList: productList
 	      });
 	    }
@@ -99030,13 +99037,14 @@
 	            fadeOut: _this3.state.fadeOut
 	          });
 	        }),
-	        !this.state.categories && this.state.productList.map(function (product, index) {
+	        !this.state.categories && this.state.productList[this.state.categoryId].map(function (product, index) {
 	          return _react2.default.createElement(_SelectableProduct2.default, {
 	            key: index,
 	            product: product,
-	            position: _this3.calculatePosition(index, _this3.state.productList.length),
+	            position: _this3.calculatePosition(index, _this3.state.productList[_this3.state.categoryId].length),
 	            onSelect: _this3.selectProduct,
-	            fadeOut: _this3.state.fadeOut
+	            fadeOut: _this3.state.fadeOut,
+	            category: _this3.state.categoryId
 	          });
 	        }),
 	        !this.state.categories && _react2.default.createElement(_ImageTurner2.default, { fadeOut: this.state.fadeOut }),
@@ -99116,7 +99124,7 @@
 	        }),
 	        _react2.default.createElement(_aframeReact.Entity, {
 	          geometry: 'primitive: box; depth: 0.1; height: 1; width: 2',
-	          material: { src: 'url(../resources/' + this.props.category.id + '.png)' },
+	          material: { src: 'url(../resources/categories/' + this.props.category.id + '.png)' },
 	          onClick: function onClick() {
 	            return _this2.props.onSelect(_this2.props.category);
 	          }
@@ -99195,7 +99203,7 @@
 	        }),
 	        _react2.default.createElement(_aframeReact.Entity, {
 	          geometry: 'primitive: box; depth: 0.1; height: 0.75; width: 1.5',
-	          material: { src: 'url(../resources/bed.png)' },
+	          material: { src: 'url(../resources/' + this.props.category + '/' + this.props.product.id + '.png)' },
 	          onClick: function onClick() {
 	            return _this2.props.onSelect();
 	          }
@@ -99211,7 +99219,8 @@
 	  product: _react.PropTypes.array,
 	  position: _react.PropTypes.object,
 	  onSelect: _react.PropTypes.func,
-	  fadeOut: _react.PropTypes.bool
+	  fadeOut: _react.PropTypes.bool,
+	  category: _react.PropTypes.string
 	};
 
 	exports.default = SelectableProduct;
@@ -99355,7 +99364,8 @@
 	  subcategories: true,
 	  subcategoryList: [{
 	    categoryName: 'Sofas',
-	    subcategories: true,
+	    id: 'sofas',
+	    subcategories: false,
 	    subcategoryList: [{
 	      categoryName: 'Sofa Beds',
 	      subcategories: false
@@ -99371,9 +99381,11 @@
 	    }]
 	  }, {
 	    categoryName: 'Bookcases',
+	    id: 'bookcases',
 	    subcategories: false
 	  }, {
 	    categoryName: 'Side Tables',
+	    id: 'sideTables',
 	    subcategories: false
 	  }]
 	}, {
@@ -99399,12 +99411,19 @@
 	  subcategories: true,
 	  subcategoryList: [{
 	    categoryName: 'Bathroom Sinks',
+	    id: 'bathroomSinks',
 	    subcategories: false
 	  }, {
 	    categoryName: 'Bathroom Lighting',
+	    id: 'bathroomLighting',
 	    subcategories: false
 	  }, {
-	    categoryName: 'Towels, Bathmats',
+	    categoryName: 'Towels',
+	    id: 'towels',
+	    subcategories: false
+	  }, {
+	    categoryName: 'Bathmats',
+	    id: 'bathmats',
 	    subcategories: false
 	  }]
 	}, {
@@ -99424,115 +99443,127 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var productList = [{
-	  name: 'Bed 1',
-	  id: 'bed1',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 2',
-	  id: 'bed2',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 3',
-	  id: 'bed3',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 4',
-	  id: 'bed4',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 5',
-	  id: 'bed5',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 6',
-	  id: 'bed6',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 7',
-	  id: 'bed7',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 8',
-	  id: 'bed8',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 9',
-	  id: 'bed9',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 10',
-	  id: 'bed10',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 11',
-	  id: 'bed11',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 12',
-	  id: 'bed12',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 13',
-	  id: 'bed13',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 14',
-	  id: 'bed14',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 15',
-	  id: 'bed15',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 16',
-	  id: 'bed16',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 17',
-	  id: 'bed17',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}, {
-	  name: 'Bed 18',
-	  id: 'bed18',
-	  price: '119',
-	  colors: ['white', 'blue', 'grey'],
-	  additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
-	}];
+	var productList = {
+	  outdoors: [],
+	  bathmats: [],
+	  towels: [],
+	  bathroomLigthing: [],
+	  bathroomSinks: [],
+	  nightTables: [],
+	  beds: [{
+	    name: 'Luxurious Duo',
+	    id: 'bed1',
+	    price: '119',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }],
+	  wardrobes: [],
+	  sideTables: [],
+	  bookcases: [],
+	  sofas: [{
+	    name: '',
+	    id: 'sofa1',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa2',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa3',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa4',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa5',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa6',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa7',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa8',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa9',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa10',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa11',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa12',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa13',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa14',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa15',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa16',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sofa17',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }]
+	};
 
 	exports.default = productList;
 

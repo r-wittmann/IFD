@@ -35,6 +35,10 @@ class CategorySelector extends React.Component {
   }
 
   selectCategory (selectedCategory) {
+    this.setState({
+      fadeOut: true
+    })
+
     const newGoBackToArray = this.state.goBackToArray
     newGoBackToArray.push(this.state.selectedCategoryList)
 
@@ -46,6 +50,9 @@ class CategorySelector extends React.Component {
       this.fadeOutCategories(this, selectedCategory.subcategoryList)
     } else {
       console.log('switch to products')
+      this.setState({
+        categoryId: selectedCategory.id
+      })
       this.fadeOutCategories(this)
     }
   }
@@ -55,6 +62,10 @@ class CategorySelector extends React.Component {
   }
 
   goBack () {
+    this.setState({
+      fadeOut: true
+    })
+
     const newGoBackToArray = this.state.goBackToArray
 
     this.fadeOutCategories(this, newGoBackToArray.pop())
@@ -65,10 +76,6 @@ class CategorySelector extends React.Component {
   }
 
   fadeOutCategories (self, categoryList) {
-    self.setState({
-      fadeOut: true
-    })
-
     if (categoryList) {
       window.setTimeout(() => {
         self.setState({
@@ -81,8 +88,7 @@ class CategorySelector extends React.Component {
     } else {
       window.setTimeout(() => {
         self.setState({
-          selectedCategoryList: [],
-          categories: false
+          selectedCategoryList: []
         })
         self.fadeInProducts(self, this.props.productList)
       }, 1000)
@@ -99,6 +105,7 @@ class CategorySelector extends React.Component {
   fadeInProducts (self, productList) {
     self.setState({
       fadeOut: false,
+      categories: false,
       productList
     })
   }
@@ -127,13 +134,14 @@ class CategorySelector extends React.Component {
             fadeOut={this.state.fadeOut}
           />
         )}
-        {!this.state.categories && this.state.productList.map((product, index) =>
+        {!this.state.categories && this.state.productList[this.state.categoryId].map((product, index) =>
           <SelectableProduct
             key={index}
             product={product}
-            position={this.calculatePosition(index, this.state.productList.length)}
+            position={this.calculatePosition(index, this.state.productList[this.state.categoryId].length)}
             onSelect={this.selectProduct}
             fadeOut={this.state.fadeOut}
+            category={this.state.categoryId}
           />
         )}
         {!this.state.categories &&
