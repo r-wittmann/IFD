@@ -26,7 +26,28 @@ class SelectableProduct extends React.Component {
         <Entity
           geometry='primitive: box; depth: 0.1; height: 0.75; width: 1.5'
           material={{ src: `url(../resources/${this.props.category}/${this.props.product.id}.png)` }}
-          onClick={() => this.props.onSelect()}
+          onClick={() => this.props.onSelect(this.props.hoverIn, this.props.product)}
+        >
+          {this.props.hoverIn &&
+            <a-animation
+              attribute='position'
+              to='0 0 4'
+              dur='1000'
+            />
+          }
+          {!this.props.hoverIn &&
+            <a-animation
+              attribute='position'
+              to='0 0 0'
+              dur='1000'
+            />
+          }
+        </Entity>
+        <Entity
+          position='0 0 0.1'
+          geometry='primitive: box; depth: 0.1; height: 0.75; width: 1.5'
+          material={{ opacity: 0.1 }}
+          onClick={() => {}}
         />
       </Entity>
     )
@@ -38,7 +59,8 @@ SelectableProduct.proptypes = {
   position: PropTypes.object,
   onSelect: PropTypes.func,
   fadeOut: PropTypes.bool,
-  category: PropTypes.string
+  category: PropTypes.string,
+  hoverIn: PropTypes.bool
 }
 
 export default SelectableProduct

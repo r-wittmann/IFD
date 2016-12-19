@@ -98755,11 +98755,12 @@
 	      _extends({ id: 'main-camera', camera: 'userHeight: 1.6', 'look-controls': true, 'wasd-controls': '' }, props),
 	      _react2.default.createElement('a-entity', {
 	        raycaster: 'far: 8; near: 6.1;',
-	        cursor: 'fuse: true; fuseTimeout: 1;'
+	        cursor: 'fuse: true; fuseTimeout: 1'
 	      }),
 	      _react2.default.createElement(
 	        _aframeReact.Entity,
 	        {
+	          raycaster: 'far: 4; near: 3.9;',
 	          cursor: '' // selection should work by clicking on desctop and by fusing on the mobile device
 	          , position: '0 0 -1',
 	          geometry: 'primitive: ring; radiusInner: 0.015; radiusOuter: 0.02',
@@ -98781,7 +98782,35 @@
 	          from: '1 1 1',
 	          to: '0.1 0.1 0.1',
 	          dur: '1200',
-	          delay: '300'
+	          delay: '200'
+	        })
+	      ),
+	      _react2.default.createElement(
+	        _aframeReact.Entity,
+	        {
+	          raycaster: 'far: 3.5; near: 1;',
+	          cursor: 'fuse: true; fuse-timeout: 3500',
+	          position: '0 0 -1',
+	          geometry: 'primitive: torus; radius: 0.03; radius-tubular: 0.004; arc: 0.1;',
+	          material: 'color: orange; shader: flat'
+	        },
+	        _react2.default.createElement('a-animation', {
+	          begin: 'click',
+	          easing: 'ease-in',
+	          attribute: 'geometry.arc',
+	          fill: 'backwards',
+	          from: '360',
+	          to: '0.1',
+	          dur: '200' }),
+	        _react2.default.createElement('a-animation', {
+	          begin: 'cursor-fusing',
+	          easing: 'linear',
+	          attribute: 'geometry.arc',
+	          fill: 'backwards',
+	          from: '0.1',
+	          to: '360',
+	          dur: '3000',
+	          delay: '500'
 	        })
 	      )
 	    )
@@ -98818,15 +98847,6 @@
 	      // material={{ shader: 'flat', src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }}
 	      , material: { color: '#ddd' },
 	      scale: '1 1 -1'
-	    }),
-	    _react2.default.createElement(_aframeReact.Entity, {
-	      position: '0 1.6 0',
-	      geometry: { primitive: 'sphere', radius: 6.1 },
-	      material: { opacity: 0.5 },
-	      scale: '1 1 -1',
-	      onClick: function onClick() {
-	        console.log('click');
-	      }
 	    })
 	  );
 	};
@@ -98924,6 +98944,7 @@
 
 	    _this.selectCategory = _this.selectCategory.bind(_this);
 	    _this.goBack = _this.goBack.bind(_this);
+	    _this.selectProduct = _this.selectProduct.bind(_this);
 	    return _this;
 	  }
 
@@ -98938,9 +98959,9 @@
 	      var productPosition = 2 * index * Math.PI / boxCount;
 
 	      if (this.state.categories) {
-	        x = 6 * Math.cos(categoryPosition);
+	        x = 5 * Math.cos(categoryPosition);
 	        y = 1.6;
-	        z = -6 * Math.sin(categoryPosition);
+	        z = -5 * Math.sin(categoryPosition);
 	      } else {
 	        x = 6.2 * Math.cos(productPosition);
 	        y = 1.6;
@@ -98975,8 +98996,14 @@
 	    }
 	  }, {
 	    key: 'selectProduct',
-	    value: function selectProduct() {
-	      console.log('select Product');
+	    value: function selectProduct(hovered, product) {
+	      if (hovered) {
+	        console.log('select Product');
+	      } else {
+	        this.setState({
+	          hoveredProduct: product.id
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'goBack',
@@ -99073,7 +99100,8 @@
 	              position: _this3.calculatePosition(index, _this3.state.productList[_this3.state.categoryId].length),
 	              onSelect: _this3.selectProduct,
 	              fadeOut: _this3.state.fadeOut,
-	              category: _this3.state.categoryId
+	              category: _this3.state.categoryId,
+	              hoverIn: product.id === _this3.state.hoveredProduct && !_this3.state.fadeOut
 
 	            });
 	          }),
@@ -99251,12 +99279,31 @@
 	          to: this.props.position.x + ' ' + (this.props.position.y - 2.5) + ' ' + this.props.position.z,
 	          dur: '1000'
 	        }),
+	        _react2.default.createElement(
+	          _aframeReact.Entity,
+	          {
+	            geometry: 'primitive: box; depth: 0.1; height: 0.75; width: 1.5',
+	            material: { src: 'url(../resources/' + this.props.category + '/' + this.props.product.id + '.png)' },
+	            onClick: function onClick() {
+	              return _this2.props.onSelect(_this2.props.hoverIn, _this2.props.product);
+	            }
+	          },
+	          this.props.hoverIn && _react2.default.createElement('a-animation', {
+	            attribute: 'position',
+	            to: '0 0 4',
+	            dur: '1000'
+	          }),
+	          !this.props.hoverIn && _react2.default.createElement('a-animation', {
+	            attribute: 'position',
+	            to: '0 0 0',
+	            dur: '1000'
+	          })
+	        ),
 	        _react2.default.createElement(_aframeReact.Entity, {
+	          position: '0 0 0.1',
 	          geometry: 'primitive: box; depth: 0.1; height: 0.75; width: 1.5',
-	          material: { src: 'url(../resources/' + this.props.category + '/' + this.props.product.id + '.png)' },
-	          onClick: function onClick() {
-	            return _this2.props.onSelect();
-	          }
+	          material: { opacity: 0.1 },
+	          onClick: function onClick() {}
 	        })
 	      );
 	    }
@@ -99270,7 +99317,8 @@
 	  position: _react.PropTypes.object,
 	  onSelect: _react.PropTypes.func,
 	  fadeOut: _react.PropTypes.bool,
-	  category: _react.PropTypes.string
+	  category: _react.PropTypes.string,
+	  hoverIn: _react.PropTypes.bool
 	};
 
 	exports.default = SelectableProduct;

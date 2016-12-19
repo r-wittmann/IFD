@@ -21,6 +21,7 @@ class CategorySelector extends React.Component {
 
     this.selectCategory = this.selectCategory.bind(this)
     this.goBack = this.goBack.bind(this)
+    this.selectProduct = this.selectProduct.bind(this)
   }
 
   calculatePosition (index, boxCount) {
@@ -30,9 +31,9 @@ class CategorySelector extends React.Component {
     const productPosition = 2 * index * Math.PI / boxCount
 
     if (this.state.categories) {
-      x = 6 * Math.cos(categoryPosition)
+      x = 5 * Math.cos(categoryPosition)
       y = 1.6
-      z = -6 * Math.sin(categoryPosition)
+      z = -5 * Math.sin(categoryPosition)
     } else {
       x = 6.2 * Math.cos(productPosition)
       y = 1.6
@@ -65,8 +66,14 @@ class CategorySelector extends React.Component {
     }
   }
 
-  selectProduct () {
-    console.log('select Product')
+  selectProduct (hovered, product) {
+    if (hovered) {
+      console.log('select Product')
+    } else {
+      this.setState({
+        hoveredProduct: product.id
+      })
+    }
   }
 
   goBack () {
@@ -152,6 +159,7 @@ class CategorySelector extends React.Component {
                 onSelect={this.selectProduct}
                 fadeOut={this.state.fadeOut}
                 category={this.state.categoryId}
+                hoverIn={product.id === this.state.hoveredProduct && !this.state.fadeOut}
 
               />
             )}

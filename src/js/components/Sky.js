@@ -10,12 +10,5 @@ export default () => (
       material={{ color: '#ddd' }}
       scale='1 1 -1'
     />
-    <Entity
-      position='0 1.6 0'
-      geometry={{ primitive: 'sphere', radius: 6.1 }}
-      material={{ opacity: 0.5 }}
-      scale='1 1 -1'
-      onClick={() => { console.log('click') }}
-    />
   </Entity>
 )
