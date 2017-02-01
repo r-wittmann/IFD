@@ -46,7 +46,7 @@ class SelectableProduct extends React.Component {
         <Entity
           position='0 0 0.1'
           geometry='primitive: box; depth: 0.1; height: 0.75; width: 1.5'
-          material={{ opacity: 0.1 }}
+          material={{ opacity: 0.3 }}
           onClick={() => {}}
         />
       </Entity>

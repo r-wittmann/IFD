@@ -4,11 +4,12 @@ import { Entity } from 'aframe-react'
 const Camera = (props) => (
   <Entity>
     <Entity id='main-camera' camera='userHeight: 1.6' look-controls wasd-controls='' {...props}>
-      {/* hover cursor */}
+      {/* hover cursor, product hovering */}
       <a-entity
         raycaster='far: 8; near: 6.1;'
         cursor='fuse: true; fuseTimeout: 1'
       />
+      {/* category selector with animation */}
       <Entity
         raycaster='far: 4; near: 3.9;'
         cursor='' // selection should work by clicking on desctop and by fusing on the mobile device
@@ -35,11 +36,12 @@ const Camera = (props) => (
           delay='200'
         />
       </Entity>
+      {/* product selector, orange ring */}
       <Entity
         raycaster='far: 3.5; near: 1;'
         cursor='fuse: true; fuse-timeout: 3500'
         position='0 0 -1'
-        geometry='primitive: torus; radius: 0.03; radius-tubular: 0.004; arc: 0.1;'
+        geometry='primitive: torus; radius: 0.03; radius-tubular: 0.004; arc: 0.01;'
         material='color: orange; shader: flat'
       >
         <a-animation
@@ -48,18 +50,24 @@ const Camera = (props) => (
           attribute='geometry.arc'
           fill='backwards'
           from='360'
-          to='0.1'
+          to='0.01'
           dur='200' />
+        <a-animation
+          begin='mouseleave'
+          easing='ease-in'
+          attribute='geometry.arc'
+          fill='backwards'
+          to='0.01'
+          dur='500' />
         <a-animation
           begin='cursor-fusing'
           easing='linear'
           attribute='geometry.arc'
           fill='backwards'
-          from='0.1'
+          from='0.01'
           to='360'
-          dur='3000'
-          delay='500'
-        />
+          dur='2500'
+          delay='1000' />
       </Entity>
     </Entity>
   </Entity>

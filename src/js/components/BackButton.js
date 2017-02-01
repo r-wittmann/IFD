@@ -3,21 +3,21 @@ import { Entity } from 'aframe-react'
 
 export default (props) => (
   <Entity
-    position='0 -0.7 -1.5'
+    position='0 -0.7 -4.9'
     onClick={props.goBack}
     look-at='#main-camera'
   >
     {!props.fadeOut && (
       <a-animation
         attribute='position'
-        to='0 0.5 -1.5'
+        to='0 0.5 -4.9'
         dur='1000'
       />
     )}
     {props.fadeOut && (
       <a-animation
         attribute='position'
-        to='0 -0.7 -1.5'
+        to='0 -0.7 -4.9'
         dur='1000'
       />
     )}

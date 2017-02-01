@@ -23,7 +23,7 @@ class ImageTurner extends React.Component {
         )}
         <Entity
           look-at='#main-camera'
-          position='-5 0.8 -5'
+          position='-2 0.8 -6'
           geometry={{ primitive: 'box', width: 5, height: 5, depth: 0.1 }}
           material={{ color: 'white', opacity: 0 }}
           onClick={() => this.props.turnImage(0)}
@@ -32,12 +32,12 @@ class ImageTurner extends React.Component {
           look-at='#main-camera'
           geometry={{ primitive: 'box', width: 0.7, height: 0.35, depth: 0.1 }}
           material={{ src: 'url(../resources/arrowLeft.png)' }}
-          position='-5 0.8 -4.99'
+          position='-2 0.8 -5.99'
           onClick={() => this.props.turnImage(1)}
         />
         <Entity
           look-at='#main-camera'
-          position='5 0.8 -5'
+          position='2 0.8 -6'
           geometry={{ primitive: 'box', width: 5, height: 5, depth: 0.1 }}
           material={{ color: 'white', opacity: 0 }}
           onClick={() => this.props.turnImage(0)}
@@ -46,7 +46,7 @@ class ImageTurner extends React.Component {
           look-at='#main-camera'
           geometry={{ primitive: 'box', width: 0.7, height: 0.35, depth: 0.1 }}
           material={{ src: 'url(../resources/arrowRight.png)' }}
-          position='5 0.8 -4.99'
+          position='2 0.8 -5.99'
           onClick={() => this.props.turnImage(-1)}
         />
       </Entity>

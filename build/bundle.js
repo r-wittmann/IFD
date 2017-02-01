@@ -99,6 +99,14 @@
 
 	var _productList2 = _interopRequireDefault(_productList);
 
+	var _Camera3 = __webpack_require__(490);
+
+	var _Camera4 = _interopRequireDefault(_Camera3);
+
+	var _Sky3 = __webpack_require__(491);
+
+	var _Sky4 = _interopRequireDefault(_Sky3);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -116,21 +124,40 @@
 	    var _this = _possibleConstructorReturn(this, (VRScene.__proto__ || Object.getPrototypeOf(VRScene)).call(this, props));
 
 	    _this.state = {
-	      cameraPosition: '0 0 0'
+	      cameraPosition: '0 0 0',
+	      viewProduct: false
 	    };
+	    _this.toggleProductView = _this.toggleProductView.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(VRScene, [{
+	    key: 'toggleProductView',
+	    value: function toggleProductView(bool) {
+	      this.setState({
+	        viewProduct: bool
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
+	      return !this.state.viewProduct ? _react2.default.createElement(
 	        _aframeReact.Scene,
 	        null,
 	        _react2.default.createElement(_Camera2.default, { position: this.state.cameraPosition }),
 	        _react2.default.createElement(_Sky2.default, null),
 	        _react2.default.createElement(_Light2.default, null),
-	        _react2.default.createElement(_CategorySelector2.default, { categoryList: _categoryList2.default, productList: _productList2.default })
+	        _react2.default.createElement(_CategorySelector2.default, {
+	          categoryList: _categoryList2.default,
+	          productList: _productList2.default,
+	          toggleProductView: this.toggleProductView
+	        })
+	      ) : _react2.default.createElement(
+	        _aframeReact.Scene,
+	        null,
+	        _react2.default.createElement(_Camera4.default, null),
+	        _react2.default.createElement(_Sky4.default, null),
+	        _react2.default.createElement(_Light2.default, null)
 	      );
 	    }
 	  }]);
@@ -98791,7 +98818,7 @@
 	          raycaster: 'far: 3.5; near: 1;',
 	          cursor: 'fuse: true; fuse-timeout: 3500',
 	          position: '0 0 -1',
-	          geometry: 'primitive: torus; radius: 0.03; radius-tubular: 0.004; arc: 0.1;',
+	          geometry: 'primitive: torus; radius: 0.03; radius-tubular: 0.004; arc: 0.01;',
 	          material: 'color: orange; shader: flat'
 	        },
 	        _react2.default.createElement('a-animation', {
@@ -98800,18 +98827,24 @@
 	          attribute: 'geometry.arc',
 	          fill: 'backwards',
 	          from: '360',
-	          to: '0.1',
+	          to: '0.01',
 	          dur: '200' }),
+	        _react2.default.createElement('a-animation', {
+	          begin: 'mouseleave',
+	          easing: 'ease-in',
+	          attribute: 'geometry.arc',
+	          fill: 'backwards',
+	          to: '0.01',
+	          dur: '500' }),
 	        _react2.default.createElement('a-animation', {
 	          begin: 'cursor-fusing',
 	          easing: 'linear',
 	          attribute: 'geometry.arc',
 	          fill: 'backwards',
-	          from: '0.1',
+	          from: '0.01',
 	          to: '360',
-	          dur: '3000',
-	          delay: '500'
-	        })
+	          dur: '2500',
+	          delay: '1000' })
 	      )
 	    )
 	  );
@@ -98987,7 +99020,6 @@
 	      if (selectedCategory.subcategories) {
 	        this.fadeOutCategories(this, selectedCategory.subcategoryList);
 	      } else {
-	        console.log('switch to products');
 	        this.setState({
 	          categoryId: selectedCategory.id
 	        });
@@ -98998,7 +99030,7 @@
 	    key: 'selectProduct',
 	    value: function selectProduct(hovered, product) {
 	      if (hovered) {
-	        console.log('select Product');
+	        this.props.toggleProductView(true);
 	      } else {
 	        this.setState({
 	          hoveredProduct: product.id
@@ -99139,7 +99171,8 @@
 
 	CategorySelector.proptypes = {
 	  categoryList: _react.PropTypes.array,
-	  productList: _react.PropTypes.array
+	  productList: _react.PropTypes.array,
+	  toggleProductView: _react.PropTypes.func
 	};
 
 	exports.default = CategorySelector;
@@ -99302,7 +99335,7 @@
 	        _react2.default.createElement(_aframeReact.Entity, {
 	          position: '0 0 0.1',
 	          geometry: 'primitive: box; depth: 0.1; height: 0.75; width: 1.5',
-	          material: { opacity: 0.1 },
+	          material: { opacity: 0.3 },
 	          onClick: function onClick() {}
 	        })
 	      );
@@ -99345,18 +99378,18 @@
 	  return _react2.default.createElement(
 	    _aframeReact.Entity,
 	    {
-	      position: '0 -0.7 -1.5',
+	      position: '0 -0.7 -4.9',
 	      onClick: props.goBack,
 	      'look-at': '#main-camera'
 	    },
 	    !props.fadeOut && _react2.default.createElement('a-animation', {
 	      attribute: 'position',
-	      to: '0 0.5 -1.5',
+	      to: '0 0.5 -4.9',
 	      dur: '1000'
 	    }),
 	    props.fadeOut && _react2.default.createElement('a-animation', {
 	      attribute: 'position',
-	      to: '0 -0.7 -1.5',
+	      to: '0 -0.7 -4.9',
 	      dur: '1000'
 	    }),
 	    _react2.default.createElement(_aframeReact.Entity, {
@@ -99426,7 +99459,7 @@
 	        }),
 	        _react2.default.createElement(_aframeReact.Entity, {
 	          'look-at': '#main-camera',
-	          position: '-5 0.8 -5',
+	          position: '-2 0.8 -6',
 	          geometry: { primitive: 'box', width: 5, height: 5, depth: 0.1 },
 	          material: { color: 'white', opacity: 0 },
 	          onClick: function onClick() {
@@ -99437,14 +99470,14 @@
 	          'look-at': '#main-camera',
 	          geometry: { primitive: 'box', width: 0.7, height: 0.35, depth: 0.1 },
 	          material: { src: 'url(../resources/arrowLeft.png)' },
-	          position: '-5 0.8 -4.99',
+	          position: '-2 0.8 -5.99',
 	          onClick: function onClick() {
 	            return _this2.props.turnImage(1);
 	          }
 	        }),
 	        _react2.default.createElement(_aframeReact.Entity, {
 	          'look-at': '#main-camera',
-	          position: '5 0.8 -5',
+	          position: '2 0.8 -6',
 	          geometry: { primitive: 'box', width: 5, height: 5, depth: 0.1 },
 	          material: { color: 'white', opacity: 0 },
 	          onClick: function onClick() {
@@ -99455,7 +99488,7 @@
 	          'look-at': '#main-camera',
 	          geometry: { primitive: 'box', width: 0.7, height: 0.35, depth: 0.1 },
 	          material: { src: 'url(../resources/arrowRight.png)' },
-	          position: '5 0.8 -4.99',
+	          position: '2 0.8 -5.99',
 	          onClick: function onClick() {
 	            return _this2.props.turnImage(-1);
 	          }
@@ -99691,6 +99724,96 @@
 	};
 
 	exports.default = productList;
+
+/***/ },
+/* 490 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _aframeReact = __webpack_require__(477);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Camera = function Camera(props) {
+	  return _react2.default.createElement(
+	    _aframeReact.Entity,
+	    null,
+	    _react2.default.createElement(
+	      _aframeReact.Entity,
+	      _extends({ id: 'main-camera', camera: 'userHeight: 1.6', 'look-controls': true, 'wasd-controls': '' }, props),
+	      _react2.default.createElement(
+	        _aframeReact.Entity,
+	        {
+	          cursor: 'fuse: true; fuseTimeout: 2000',
+	          position: '0 0 -2',
+	          geometry: 'primitive: ring; radiusInner: 0.03; radiusOuter: 0.04',
+	          material: 'color: green; shader: flat'
+	        },
+	        _react2.default.createElement('a-animation', {
+	          begin: 'click',
+	          easing: 'ease-in',
+	          attribute: 'scale',
+	          fill: 'backwards',
+	          from: '0.1 0.1 0.1',
+	          to: '1 1 1',
+	          dur: '200' }),
+	        _react2.default.createElement('a-animation', {
+	          begin: 'cursor-fusing',
+	          easing: 'linear',
+	          attribute: 'scale',
+	          fill: 'backwards',
+	          from: '1 1 1',
+	          to: '0.1 0.1 0.1',
+	          dur: '2000' })
+	      )
+	    )
+	  );
+	};
+
+	exports.default = Camera;
+
+/***/ },
+/* 491 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _aframeReact = __webpack_require__(477);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function () {
+	  return _react2.default.createElement(
+	    _aframeReact.Entity,
+	    null,
+	    _react2.default.createElement(_aframeReact.Entity, {
+	      position: '0 3.5 0',
+	      geometry: { primitive: 'sphere', radius: 10 },
+	      material: { shader: 'flat', src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }
+	      // material={{ color: '#ddd' }}
+	      , scale: '1 1 -1'
+	    })
+	  );
+	};
 
 /***/ }
 /******/ ]);

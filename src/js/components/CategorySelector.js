@@ -58,7 +58,6 @@ class CategorySelector extends React.Component {
     if (selectedCategory.subcategories) {
       this.fadeOutCategories(this, selectedCategory.subcategoryList)
     } else {
-      console.log('switch to products')
       this.setState({
         categoryId: selectedCategory.id
       })
@@ -68,7 +67,7 @@ class CategorySelector extends React.Component {
 
   selectProduct (hovered, product) {
     if (hovered) {
-      console.log('select Product')
+      this.props.toggleProductView(true)
     } else {
       this.setState({
         hoveredProduct: product.id
@@ -203,7 +202,8 @@ class CategorySelector extends React.Component {
 
 CategorySelector.proptypes = {
   categoryList: PropTypes.array,
-  productList: PropTypes.array
+  productList: PropTypes.array,
+  toggleProductView: PropTypes.func
 }
 
 export default CategorySelector
