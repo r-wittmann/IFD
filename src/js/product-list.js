@@ -20,7 +20,241 @@ const productList = {
     ]
   }],
   wardrobes: [],
-  sideTables: [],
+  sideTables: [{
+    name: '',
+    id: 'sideTable1',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable2',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable3',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable4',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable5',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable6',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable7',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable8',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable9',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable10',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable11',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable12',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable13',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable14',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable15',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable16',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable17',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }, {
+    name: '',
+    id: 'sideTable18',
+    price: '',
+    colors: [
+      'white',
+      'blue',
+      'grey'
+    ],
+    additional: [
+      'paragraph 1 of additional information',
+      'paragraph 2 with some other information'
+    ]
+  }],
   bookcases: [],
   sofas: [{
     name: '',

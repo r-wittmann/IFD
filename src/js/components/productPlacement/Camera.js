@@ -3,7 +3,7 @@ import { Entity } from 'aframe-react'
 
 const Camera = (props) => (
   <Entity>
-    <Entity id='main-camera' camera='userHeight: 1.6' look-controls wasd-controls='' {...props}>
+    <Entity id='main-camera' camera='userHeight: 1.6' look-controls wasd-controls='' position='0 0 10' {...props}>
       <Entity
         cursor='fuse: true; fuseTimeout: 2000'
         position='0 0 -2'

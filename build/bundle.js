@@ -99616,7 +99616,115 @@
 	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
 	  }],
 	  wardrobes: [],
-	  sideTables: [],
+	  sideTables: [{
+	    name: '',
+	    id: 'sideTable1',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable2',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable3',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable4',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable5',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable6',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable7',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable8',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable9',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable10',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable11',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable12',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable13',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable14',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable15',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable16',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable17',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }, {
+	    name: '',
+	    id: 'sideTable18',
+	    price: '',
+	    colors: ['white', 'blue', 'grey'],
+	    additional: ['paragraph 1 of additional information', 'paragraph 2 with some other information']
+	  }],
 	  bookcases: [],
 	  sofas: [{
 	    name: '',
@@ -99751,7 +99859,7 @@
 	    null,
 	    _react2.default.createElement(
 	      _aframeReact.Entity,
-	      _extends({ id: 'main-camera', camera: 'userHeight: 1.6', 'look-controls': true, 'wasd-controls': '' }, props),
+	      _extends({ id: 'main-camera', camera: 'userHeight: 1.6', 'look-controls': true, 'wasd-controls': '', position: '0 0 10' }, props),
 	      _react2.default.createElement(
 	        _aframeReact.Entity,
 	        {
@@ -99803,15 +99911,32 @@
 
 	exports.default = function () {
 	  return _react2.default.createElement(
-	    _aframeReact.Entity,
+	    _aframeReact.Entity
+	    // position='0 3.5 0'
+	    ,
 	    null,
-	    _react2.default.createElement(_aframeReact.Entity, {
-	      position: '0 3.5 0',
-	      geometry: { primitive: 'sphere', radius: 10 },
-	      material: { shader: 'flat', src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }
-	      // material={{ color: '#ddd' }}
-	      , scale: '1 1 -1'
-	    })
+	    _react2.default.createElement(
+	      _aframeReact.Entity,
+	      { geometry: { primitive: 'sphere', radius: 20 },
+	        material: { src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }
+	        // material={{ color: '#ddd' }}
+	        , scale: '1 1 -1'
+	      },
+	      _react2.default.createElement(
+	        _aframeReact.Entity,
+	        { position: '-3 -3 0' },
+	        _react2.default.createElement(_aframeReact.Entity, {
+	          'collada-model': 'url(../../resources/model.dae)'
+	        })
+	      ),
+	      _react2.default.createElement('a-animation', {
+	        attribute: 'rotation',
+	        dur: '4000000',
+	        to: '0 36000 0',
+	        repeat: 'indefinite',
+	        easing: 'linear'
+	      })
+	    )
 	  );
 	};
 
