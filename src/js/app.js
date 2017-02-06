@@ -20,25 +20,28 @@ import productList from './product-list'
 import ProductCamera from './components/productPlacement/Camera'
 import ProductSky from './components/productPlacement/Sky'
 
+import CameraClickDummy from './components/CameraClickDummy'
+import ClickDummy from './components/ClickDummy'
+
 class VRScene extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       cameraPosition: '0 0 0',
-      viewProduct: false
+      view: 0
     }
     this.toggleProductView = this.toggleProductView.bind(this)
   }
 
-  toggleProductView (bool) {
+  toggleProductView () {
     this.setState({
-      viewProduct: bool
+      view: ++this.state.view
     })
   }
 
   render () {
     return (
-      !this.state.viewProduct
+      this.state.view === 0
       ? <Scene>
         <Camera position={this.state.cameraPosition} />
         <Sky />
@@ -47,15 +50,20 @@ class VRScene extends React.Component {
           categoryList={categoryList}
           productList={productList}
           toggleProductView={this.toggleProductView}
-          />
+            />
       </Scene>
-      : <Scene>
-        <ProductCamera />
-        <ProductSky />
-        <Light />
-        {/* <ProductSetup />
-          <Product /> */}
-      </Scene>
+      : this.state.view === 1
+        ? <Scene>
+          <ProductCamera />
+          <ProductSky toggleProductView={this.toggleProductView} />
+          <Light />
+          {/* <ProductSetup />
+              <Product /> */}
+        </Scene>
+        : <Scene>
+          <CameraClickDummy />
+          <ClickDummy />
+        </Scene>
       )
   }
 }

@@ -107,6 +107,14 @@
 
 	var _Sky4 = _interopRequireDefault(_Sky3);
 
+	var _CameraClickDummy = __webpack_require__(492);
+
+	var _CameraClickDummy2 = _interopRequireDefault(_CameraClickDummy);
+
+	var _ClickDummy = __webpack_require__(493);
+
+	var _ClickDummy2 = _interopRequireDefault(_ClickDummy);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -125,7 +133,7 @@
 
 	    _this.state = {
 	      cameraPosition: '0 0 0',
-	      viewProduct: false
+	      view: 0
 	    };
 	    _this.toggleProductView = _this.toggleProductView.bind(_this);
 	    return _this;
@@ -133,15 +141,15 @@
 
 	  _createClass(VRScene, [{
 	    key: 'toggleProductView',
-	    value: function toggleProductView(bool) {
+	    value: function toggleProductView() {
 	      this.setState({
-	        viewProduct: bool
+	        view: ++this.state.view
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return !this.state.viewProduct ? _react2.default.createElement(
+	      return this.state.view === 0 ? _react2.default.createElement(
 	        _aframeReact.Scene,
 	        null,
 	        _react2.default.createElement(_Camera2.default, { position: this.state.cameraPosition }),
@@ -152,12 +160,17 @@
 	          productList: _productList2.default,
 	          toggleProductView: this.toggleProductView
 	        })
-	      ) : _react2.default.createElement(
+	      ) : this.state.view === 1 ? _react2.default.createElement(
 	        _aframeReact.Scene,
 	        null,
 	        _react2.default.createElement(_Camera4.default, null),
-	        _react2.default.createElement(_Sky4.default, null),
+	        _react2.default.createElement(_Sky4.default, { toggleProductView: this.toggleProductView }),
 	        _react2.default.createElement(_Light2.default, null)
+	      ) : _react2.default.createElement(
+	        _aframeReact.Scene,
+	        null,
+	        _react2.default.createElement(_CameraClickDummy2.default, null),
+	        _react2.default.createElement(_ClickDummy2.default, null)
 	      );
 	    }
 	  }]);
@@ -99859,32 +99872,14 @@
 	    null,
 	    _react2.default.createElement(
 	      _aframeReact.Entity,
-	      _extends({ id: 'main-camera', camera: 'userHeight: 1.6', 'look-controls': true, 'wasd-controls': '', position: '0 0 10' }, props),
-	      _react2.default.createElement(
-	        _aframeReact.Entity,
-	        {
-	          cursor: 'fuse: true; fuseTimeout: 2000',
-	          position: '0 0 -2',
-	          geometry: 'primitive: ring; radiusInner: 0.03; radiusOuter: 0.04',
-	          material: 'color: green; shader: flat'
-	        },
-	        _react2.default.createElement('a-animation', {
-	          begin: 'click',
-	          easing: 'ease-in',
-	          attribute: 'scale',
-	          fill: 'backwards',
-	          from: '0.1 0.1 0.1',
-	          to: '1 1 1',
-	          dur: '200' }),
-	        _react2.default.createElement('a-animation', {
-	          begin: 'cursor-fusing',
-	          easing: 'linear',
-	          attribute: 'scale',
-	          fill: 'backwards',
-	          from: '1 1 1',
-	          to: '0.1 0.1 0.1',
-	          dur: '2000' })
-	      )
+	      _extends({ id: 'secundary-camera', camera: 'userHeight: 1.6', 'look-controls': true, 'wasd-controls': '', position: '0 -6 9' }, props),
+	      _react2.default.createElement(_aframeReact.Entity, {
+	        raycaster: 'far: 1.6; near: 1;',
+	        cursor: 'fuse: false',
+	        position: '0 0 -1',
+	        geometry: 'primitive: ring; radiusInner: 0.015; radiusOuter: 0.02',
+	        material: 'color: green; shader: flat'
+	      })
 	    )
 	  );
 	};
@@ -99909,7 +99904,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = function () {
+	exports.default = function (props) {
 	  return _react2.default.createElement(
 	    _aframeReact.Entity
 	    // position='0 3.5 0'
@@ -99917,17 +99912,31 @@
 	    null,
 	    _react2.default.createElement(
 	      _aframeReact.Entity,
-	      { geometry: { primitive: 'sphere', radius: 20 },
-	        material: { src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }
+	      { geometry: { primitive: 'sphere', radius: 15 }
+	        // material={{ src: 'url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)' }}
+	        , material: { src: 'url(../../resources/Sky2.jpg)' }
 	        // material={{ color: '#ddd' }}
 	        , scale: '1 1 -1'
 	      },
 	      _react2.default.createElement(
 	        _aframeReact.Entity,
-	        { position: '-3 -3 0' },
-	        _react2.default.createElement(_aframeReact.Entity, {
-	          'collada-model': 'url(../../resources/model.dae)'
-	        })
+	        { position: '0 -9 0', rotation: '0 180 0' },
+	        _react2.default.createElement(
+	          _aframeReact.Entity,
+	          {
+	            geometry: { primitive: 'sphere', radius: 8 },
+	            material: { color: 'white', opacity: 0.5 },
+
+	            onClick: function onClick() {
+	              return props.toggleProductView();
+	            }
+	          },
+	          _react2.default.createElement(_aframeReact.Entity, {
+	            position: '-6.5 -2 2',
+	            scale: '2 2 2',
+	            'collada-model': 'url(../../resources/model.dae)'
+	          })
+	        )
 	      ),
 	      _react2.default.createElement('a-animation', {
 	        attribute: 'rotation',
@@ -99939,6 +99948,118 @@
 	    )
 	  );
 	};
+
+/***/ },
+/* 492 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _aframeReact = __webpack_require__(477);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Camera = function Camera(props) {
+	  return _react2.default.createElement(
+	    _aframeReact.Entity,
+	    null,
+	    _react2.default.createElement(
+	      _aframeReact.Entity,
+	      _extends({ id: 'main-camera', camera: 'userHeight: 1.6', 'look-controls': true, 'wasd-controls': '', position: '0 -6 9' }, props),
+	      _react2.default.createElement(_aframeReact.Entity, {
+	        raycaster: 'far: 5; near: 1;',
+	        cursor: 'fuse: false',
+	        position: '0 0 -1',
+	        geometry: 'primitive: ring; radiusInner: 0.015; radiusOuter: 0.02',
+	        material: 'color: green; shader: flat'
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Camera;
+
+/***/ },
+/* 493 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _aframeReact = __webpack_require__(477);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ClickDummy = function (_React$Component) {
+	  _inherits(ClickDummy, _React$Component);
+
+	  function ClickDummy(props) {
+	    _classCallCheck(this, ClickDummy);
+
+	    var _this = _possibleConstructorReturn(this, (ClickDummy.__proto__ || Object.getPrototypeOf(ClickDummy)).call(this, props));
+
+	    _this.state = {
+	      position: 0
+	    };
+	    _this.next = _this.next.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(ClickDummy, [{
+	    key: 'next',
+	    value: function next() {
+	      this.setState({
+	        position: Math.min(++this.state.position, 5)
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        _aframeReact.Entity,
+	        { 'look-at': '#main-camera', position: '0 -4.5 5' },
+	        _react2.default.createElement(_aframeReact.Entity, {
+	          geometry: { primitive: 'box', width: 8, height: 5, depth: 0.1 },
+	          material: { src: 'url(../resources/clickDummy/' + this.state.position + '.png)' },
+	          onClick: function onClick() {
+	            return _this2.next();
+	          }
+	        })
+	      );
+	    }
+	  }]);
+
+	  return ClickDummy;
+	}(_react2.default.Component);
+
+	exports.default = ClickDummy;
 
 /***/ }
 /******/ ]);
